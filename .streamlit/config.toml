@@ -1,0 +1,25 @@
+# Configuración de servidor para Streamlit.
+#
+# Por defecto, Streamlit solo escucha en localhost (127.0.0.1), así que
+# nadie más en tu red puede entrar aunque tengan la IP de tu máquina.
+# address = "0.0.0.0" hace que escuche en TODAS las interfaces de red de tu
+# máquina, permitiendo que otros equipos en la misma red local (oficina)
+# entren usando tu IP: http://TU-IP-LOCAL:8501
+#
+# Esto NO expone la app a internet por sí solo — solo a quien esté en la
+# misma red local (LAN/WiFi de la oficina). Para acceso desde fuera de esa
+# red, ver la sección "Acceso remoto" del README (Tailscale recomendado).
+#
+# El puerto y la dirección también se pueden sobreescribir sin editar este
+# archivo, usando los scripts start_server.bat / start_server.sh incluidos,
+# o directamente:
+#   streamlit run ui/app.py --server.address 0.0.0.0 --server.port 8501
+
+[server]
+address = "0.0.0.0"
+port = 8501
+headless = true
+maxUploadSize = 50
+
+[browser]
+gatherUsageStats = false

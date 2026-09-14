@@ -1,0 +1,440 @@
+2026-08-31 11:29:11 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-08-31 11:29:11 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-08-31 11:29:11 | INFO     | excel_extractor | Excel 'tmp5sehau_3.xlsx': 40 registro(s) extraído(s).
+2026-08-31 11:29:12 | INFO     | organigrama_extractor | Página 1: 60 caja(s) vectorial(es) detectada(s), 37 puesto(s) extraído(s).
+2026-08-31 11:29:12 | INFO     | organigrama_extractor | Organigrama 'tmp99kgqbfb.pdf': 37 registro(s) extraído(s) en total.
+2026-08-31 11:29:12 | INFO     | comparator | Comparación finalizada: 40 resultado(s) generado(s).
+2026-08-31 11:29:12 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-08-31 11:53:55 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-08-31 11:53:55 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-08-31 11:53:55 | INFO     | excel_extractor | Excel 'tmp5dmqnbiz.xlsx': 40 registro(s) extraído(s).
+2026-08-31 11:53:56 | INFO     | word_extractor | Página 1: sin tablas con bordes detectables; se usó respaldo por patrón de línea (16 fila(s)).
+2026-08-31 11:53:56 | INFO     | word_extractor | Página 2: sin tablas con bordes detectables; se usó respaldo por patrón de línea (19 fila(s)).
+2026-08-31 11:53:56 | INFO     | word_extractor | Word (PDF) 'tmpsy6l8y0r.pdf': 35 registro(s) extraído(s).
+2026-08-31 11:53:56 | INFO     | organigrama_extractor | Página 1: 60 caja(s) vectorial(es) detectada(s), 37 puesto(s) extraído(s).
+2026-08-31 11:53:56 | INFO     | organigrama_extractor | Organigrama 'tmpsezlg40x.pdf': 37 registro(s) extraído(s) en total.
+2026-08-31 11:53:56 | INFO     | comparator | Comparación finalizada: 41 resultado(s) generado(s).
+2026-08-31 11:53:56 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:04:50 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:04:50 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 11:04:50 | INFO     | excel_extractor | Excel 'tmpa39c77nd.xlsx': 12 registro(s) extraído(s).
+2026-09-04 11:04:50 | INFO     | organigrama_extractor | Página 1: 12 caja(s) vectorial(es) detectada(s), 9 puesto(s) extraído(s).
+2026-09-04 11:04:50 | INFO     | organigrama_extractor | Página 2: 20 caja(s) vectorial(es) detectada(s), 14 puesto(s) extraído(s).
+2026-09-04 11:04:50 | INFO     | organigrama_extractor | Página 3: 191 caja(s) vectorial(es) detectada(s), 115 puesto(s) extraído(s).
+2026-09-04 11:04:51 | INFO     | organigrama_extractor | Página 4: 319 caja(s) vectorial(es) detectada(s), 213 puesto(s) extraído(s).
+2026-09-04 11:04:51 | INFO     | organigrama_extractor | Página 5: 120 caja(s) vectorial(es) detectada(s), 77 puesto(s) extraído(s).
+2026-09-04 11:04:51 | INFO     | organigrama_extractor | Página 6: 78 caja(s) vectorial(es) detectada(s), 46 puesto(s) extraído(s).
+2026-09-04 11:04:51 | INFO     | organigrama_extractor | Página 7: 115 caja(s) vectorial(es) detectada(s), 67 puesto(s) extraído(s).
+2026-09-04 11:04:51 | INFO     | organigrama_extractor | Página 8: 62 caja(s) vectorial(es) detectada(s), 46 puesto(s) extraído(s).
+2026-09-04 11:04:52 | INFO     | organigrama_extractor | Página 9: 20 caja(s) vectorial(es) detectada(s), 13 puesto(s) extraído(s).
+2026-09-04 11:04:52 | INFO     | organigrama_extractor | Organigrama 'tmp9nzopnw5.pdf': 600 registro(s) extraído(s) en total.
+2026-09-04 11:04:52 | INFO     | comparator | Comparación finalizada: 607 resultado(s) generado(s).
+2026-09-04 11:04:52 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:06:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:06:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 11:06:28 | INFO     | excel_extractor | Excel 'tmps6mr8la7.xlsx': 12 registro(s) extraído(s).
+2026-09-04 11:06:29 | INFO     | organigrama_extractor | Página 1: 12 caja(s) vectorial(es) detectada(s), 9 puesto(s) extraído(s).
+2026-09-04 11:06:29 | INFO     | organigrama_extractor | Organigrama 'tmp_95z3l3j.pdf': 9 registro(s) extraído(s) en total.
+2026-09-04 11:06:29 | INFO     | comparator | Comparación finalizada: 12 resultado(s) generado(s).
+2026-09-04 11:06:29 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:10:23 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:10:23 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 11:10:23 | INFO     | excel_extractor | Excel 'tmpnpua3q5o.xlsx': 12 registro(s) extraído(s).
+2026-09-04 11:10:24 | INFO     | organigrama_extractor | Página 1: 12 caja(s) vectorial(es) detectada(s), 9 puesto(s) extraído(s).
+2026-09-04 11:10:24 | INFO     | organigrama_extractor | Organigrama 'tmpowdc5ltp.pdf': 9 registro(s) extraído(s) en total.
+2026-09-04 11:10:24 | INFO     | comparator | Comparación finalizada: 12 resultado(s) generado(s).
+2026-09-04 11:10:24 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:11:40 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:11:40 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 11:11:40 | INFO     | excel_extractor | Excel 'tmp6_x44zik.xlsx': 12 registro(s) extraído(s).
+2026-09-04 11:11:40 | INFO     | organigrama_extractor | Página 1: 12 caja(s) vectorial(es) detectada(s), 9 puesto(s) extraído(s).
+2026-09-04 11:11:40 | INFO     | organigrama_extractor | Organigrama 'tmpr_uy_bfx.pdf': 9 registro(s) extraído(s) en total.
+2026-09-04 11:11:40 | INFO     | comparator | Comparación finalizada: 12 resultado(s) generado(s).
+2026-09-04 11:11:40 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:43:33 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:43:33 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 11:43:33 | INFO     | excel_extractor | Excel 'tmpvz6pljkn.xlsx': 16 registro(s) extraído(s).
+2026-09-04 11:43:33 | INFO     | organigrama_extractor | Página 1: 20 caja(s) vectorial(es) detectada(s), 14 puesto(s) extraído(s).
+2026-09-04 11:43:33 | INFO     | organigrama_extractor | Organigrama 'tmpnz1tdm15.pdf': 14 registro(s) extraído(s) en total.
+2026-09-04 11:43:33 | INFO     | comparator | Comparación finalizada: 18 resultado(s) generado(s).
+2026-09-04 11:43:33 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:45:03 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:45:03 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 11:45:03 | INFO     | excel_extractor | Excel 'tmpf0fb2g5y.xlsx': 117 registro(s) extraído(s).
+2026-09-04 11:45:03 | INFO     | organigrama_extractor | Página 1: 191 caja(s) vectorial(es) detectada(s), 115 puesto(s) extraído(s).
+2026-09-04 11:45:03 | INFO     | organigrama_extractor | Organigrama 'tmpa4vsmvcd.pdf': 115 registro(s) extraído(s) en total.
+2026-09-04 11:45:03 | INFO     | comparator | Comparación finalizada: 118 resultado(s) generado(s).
+2026-09-04 11:45:03 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:46:41 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:46:41 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 11:46:41 | INFO     | excel_extractor | Excel 'tmp374cmsyn.xlsx': 117 registro(s) extraído(s).
+2026-09-04 11:46:41 | INFO     | organigrama_extractor | Página 1: 191 caja(s) vectorial(es) detectada(s), 115 puesto(s) extraído(s).
+2026-09-04 11:46:41 | INFO     | organigrama_extractor | Organigrama 'tmp83t69pp5.pdf': 115 registro(s) extraído(s) en total.
+2026-09-04 11:46:41 | INFO     | comparator | Comparación finalizada: 118 resultado(s) generado(s).
+2026-09-04 11:46:41 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:47:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:47:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 11:47:28 | INFO     | excel_extractor | Hoja 'RESUMEN DE MOVIMIENTOS': 1 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:47:28 | WARNING  | excel_extractor | Hoja 'RESUMEN DE MOVIMIENTOS': no se reconocieron encabezados; usando columnas fijas de respaldo (J/K).
+2026-09-04 11:47:28 | INFO     | excel_extractor | Hoja 'COMPARATIVO DE NIVELES': 14 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:47:28 | INFO     | excel_extractor | Hoja 'COMPARATIVO DE NIVELES': encabezados detectados en fila 3 (puesto=I, nivel=B)
+2026-09-04 11:47:28 | INFO     | excel_extractor | Hoja 'COMPARATIVO POR UNIDAD ADMINIST': 2 rango(s) de celdas combinadas detectado(s).
+2026-09-04 11:47:28 | WARNING  | excel_extractor | Hoja 'COMPARATIVO POR UNIDAD ADMINIST': no se reconocieron encabezados; usando columnas fijas de respaldo (J/K).
+2026-09-04 11:47:28 | INFO     | excel_extractor | Hoja 'Tabulador 2018': encabezados detectados en fila 1 (puesto=C, nivel=B)
+2026-09-04 11:47:28 | INFO     | excel_extractor | Hoja 'Tabulador Central Vigente': encabezados detectados en fila 1 (puesto=B, nivel=A)
+2026-09-04 11:47:28 | INFO     | excel_extractor | Excel 'tmp9_y7fq0h.xlsx': 88 registro(s) extraído(s).
+2026-09-04 11:47:28 | INFO     | organigrama_extractor | Página 1: 20 caja(s) vectorial(es) detectada(s), 14 puesto(s) extraído(s).
+2026-09-04 11:47:28 | INFO     | organigrama_extractor | Organigrama 'tmp4ru6j5v8.pdf': 14 registro(s) extraído(s) en total.
+2026-09-04 11:47:28 | INFO     | comparator | Comparación finalizada: 102 resultado(s) generado(s).
+2026-09-04 11:47:28 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:49:26 | WARNING  | excel_extractor | Hoja 'PUESTOS Y COSTO' no existe en el archivo, se omite.
+2026-09-04 11:49:26 | INFO     | excel_extractor | Excel 'tmp9ay_5bg7.xlsx': 0 registro(s) extraído(s).
+2026-09-04 11:49:27 | INFO     | organigrama_extractor | Página 1: 191 caja(s) vectorial(es) detectada(s), 115 puesto(s) extraído(s).
+2026-09-04 11:49:27 | INFO     | organigrama_extractor | Organigrama 'tmpokewlx39.pdf': 115 registro(s) extraído(s) en total.
+2026-09-04 11:49:27 | INFO     | comparator | Comparación finalizada: 115 resultado(s) generado(s).
+2026-09-04 11:49:27 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 11:49:35 | WARNING  | excel_extractor | Hoja 'PUESTOS Y COSTO' no existe en el archivo, se omite.
+2026-09-04 11:49:35 | INFO     | excel_extractor | Excel 'tmppo5qvmu4.xlsx': 0 registro(s) extraído(s).
+2026-09-04 11:49:35 | INFO     | organigrama_extractor | Página 1: 191 caja(s) vectorial(es) detectada(s), 115 puesto(s) extraído(s).
+2026-09-04 11:49:35 | INFO     | organigrama_extractor | Organigrama 'tmpwethv5pt.pdf': 115 registro(s) extraído(s) en total.
+2026-09-04 11:49:35 | INFO     | comparator | Comparación finalizada: 115 resultado(s) generado(s).
+2026-09-04 11:49:35 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:03:14 | WARNING  | excel_extractor | Hoja 'PUESTOS Y COTOS' no existe en el archivo, se omite.
+2026-09-04 12:03:14 | INFO     | excel_extractor | Excel 'tmpmqtdnii6.xlsx': 0 registro(s) extraído(s).
+2026-09-04 12:03:14 | INFO     | organigrama_extractor | Página 1: 20 caja(s) vectorial(es) detectada(s), 14 puesto(s) extraído(s).
+2026-09-04 12:03:14 | INFO     | organigrama_extractor | Organigrama 'tmpju_ekybz.pdf': 14 registro(s) extraído(s) en total.
+2026-09-04 12:03:14 | INFO     | comparator | Comparación finalizada: 15 resultado(s) generado(s).
+2026-09-04 12:03:14 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:04:43 | WARNING  | excel_extractor | Hoja 'PUESTOS Y COTOS' no existe en el archivo, se omite.
+2026-09-04 12:04:43 | INFO     | excel_extractor | Excel 'tmp33vtv_6w.xlsx': 0 registro(s) extraído(s).
+2026-09-04 12:04:44 | INFO     | organigrama_extractor | Página 1: 191 caja(s) vectorial(es) detectada(s), 115 puesto(s) extraído(s).
+2026-09-04 12:04:44 | INFO     | organigrama_extractor | Organigrama 'tmp81vvm13o.pdf': 115 registro(s) extraído(s) en total.
+2026-09-04 12:04:44 | INFO     | comparator | Comparación finalizada: 115 resultado(s) generado(s).
+2026-09-04 12:04:44 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:05:07 | WARNING  | excel_extractor | Hoja 'PUESTOS Y COTOS' no existe en el archivo, se omite.
+2026-09-04 12:05:07 | INFO     | excel_extractor | Excel 'tmppsgecd42.xlsx': 0 registro(s) extraído(s).
+2026-09-04 12:05:07 | INFO     | organigrama_extractor | Página 1: 12 caja(s) vectorial(es) detectada(s), 9 puesto(s) extraído(s).
+2026-09-04 12:05:07 | INFO     | organigrama_extractor | Organigrama 'tmpwhavfj9k.pdf': 9 registro(s) extraído(s) en total.
+2026-09-04 12:05:07 | INFO     | comparator | Comparación finalizada: 9 resultado(s) generado(s).
+2026-09-04 12:05:07 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:07:05 | WARNING  | excel_extractor | Hoja 'PUSTOS Y COSTOS' no existe en el archivo, se omite.
+2026-09-04 12:07:05 | INFO     | excel_extractor | Excel 'tmpnzc47_jm.xlsx': 0 registro(s) extraído(s).
+2026-09-04 12:07:05 | INFO     | organigrama_extractor | Página 1: 20 caja(s) vectorial(es) detectada(s), 14 puesto(s) extraído(s).
+2026-09-04 12:07:05 | INFO     | organigrama_extractor | Organigrama 'tmpkubgw5qh.pdf': 14 registro(s) extraído(s) en total.
+2026-09-04 12:07:05 | INFO     | comparator | Comparación finalizada: 15 resultado(s) generado(s).
+2026-09-04 12:07:05 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:22:16 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 12:22:16 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 12:22:16 | INFO     | excel_extractor | Excel 'tmpq_xix8xw.xlsx': 16 registro(s) extraído(s).
+2026-09-04 12:22:16 | INFO     | organigrama_extractor | Página 1: 20 caja(s) vectorial(es) detectada(s), 14 puesto(s) extraído(s).
+2026-09-04 12:22:16 | INFO     | organigrama_extractor | Organigrama 'tmpgv85l7jt.pdf': 14 registro(s) extraído(s) en total.
+2026-09-04 12:22:16 | INFO     | comparator | Comparación finalizada: 18 resultado(s) generado(s).
+2026-09-04 12:22:16 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:22:48 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 12:22:48 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 12:22:48 | INFO     | excel_extractor | Excel 'tmprr3lmjvb.xlsx': 117 registro(s) extraído(s).
+2026-09-04 12:22:48 | INFO     | organigrama_extractor | Página 1: 191 caja(s) vectorial(es) detectada(s), 115 puesto(s) extraído(s).
+2026-09-04 12:22:48 | INFO     | organigrama_extractor | Organigrama 'tmpz9bgpca3.pdf': 115 registro(s) extraído(s) en total.
+2026-09-04 12:22:48 | INFO     | comparator | Comparación finalizada: 118 resultado(s) generado(s).
+2026-09-04 12:22:48 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:22:52 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 12:22:52 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 12:22:52 | INFO     | excel_extractor | Excel 'tmpw4z42vfq.xlsx': 117 registro(s) extraído(s).
+2026-09-04 12:22:52 | INFO     | organigrama_extractor | Página 1: 191 caja(s) vectorial(es) detectada(s), 115 puesto(s) extraído(s).
+2026-09-04 12:22:52 | INFO     | organigrama_extractor | Organigrama 'tmpv_8cuhuh.pdf': 115 registro(s) extraído(s) en total.
+2026-09-04 12:22:52 | INFO     | comparator | Comparación finalizada: 118 resultado(s) generado(s).
+2026-09-04 12:22:52 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:24:53 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 12:24:53 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 12:24:53 | INFO     | excel_extractor | Excel 'tmpv0aey2ae.xlsx': 238 registro(s) extraído(s).
+2026-09-04 12:24:53 | INFO     | organigrama_extractor | Página 1: 319 caja(s) vectorial(es) detectada(s), 213 puesto(s) extraído(s).
+2026-09-04 12:24:53 | INFO     | organigrama_extractor | Organigrama 'tmp058hmrg1.pdf': 213 registro(s) extraído(s) en total.
+2026-09-04 12:24:53 | INFO     | comparator | Comparación finalizada: 243 resultado(s) generado(s).
+2026-09-04 12:24:54 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:43:32 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 12:43:32 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 12:43:32 | INFO     | excel_extractor | Excel 'tmpermouslw.xlsx': 12 registro(s) extraído(s).
+2026-09-04 12:43:32 | INFO     | organigrama_extractor | Página 1: 12 caja(s) vectorial(es) detectada(s), 9 puesto(s) extraído(s).
+2026-09-04 12:43:32 | INFO     | organigrama_extractor | Organigrama 'tmpi5m4a28y.pdf': 9 registro(s) extraído(s) en total.
+2026-09-04 12:43:32 | INFO     | comparator | Comparación finalizada: 12 resultado(s) generado(s).
+2026-09-04 12:43:32 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:44:23 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 12:44:23 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 12:44:23 | INFO     | excel_extractor | Excel 'tmpadn0jje0.xlsx': 12 registro(s) extraído(s).
+2026-09-04 12:44:23 | INFO     | organigrama_extractor | Página 1: 12 caja(s) vectorial(es) detectada(s), 9 puesto(s) extraído(s).
+2026-09-04 12:44:23 | INFO     | organigrama_extractor | Organigrama 'tmpbyu2992i.pdf': 9 registro(s) extraído(s) en total.
+2026-09-04 12:44:23 | INFO     | comparator | Comparación finalizada: 12 resultado(s) generado(s).
+2026-09-04 12:44:23 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:44:29 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 12:44:29 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 12:44:29 | INFO     | excel_extractor | Excel 'tmpsh66huna.xlsx': 12 registro(s) extraído(s).
+2026-09-04 12:44:29 | INFO     | organigrama_extractor | Página 1: 12 caja(s) vectorial(es) detectada(s), 9 puesto(s) extraído(s).
+2026-09-04 12:44:29 | INFO     | organigrama_extractor | Organigrama 'tmpctvbvbtn.pdf': 9 registro(s) extraído(s) en total.
+2026-09-04 12:44:29 | INFO     | comparator | Comparación finalizada: 12 resultado(s) generado(s).
+2026-09-04 12:44:29 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:46:47 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 12:46:47 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 12:46:47 | INFO     | excel_extractor | Excel 'tmp0jeugmlu.xlsx': 96 registro(s) extraído(s).
+2026-09-04 12:46:48 | INFO     | organigrama_extractor | Página 1: 120 caja(s) vectorial(es) detectada(s), 77 puesto(s) extraído(s).
+2026-09-04 12:46:48 | INFO     | organigrama_extractor | Organigrama 'tmpbfliadmu.pdf': 77 registro(s) extraído(s) en total.
+2026-09-04 12:46:48 | INFO     | comparator | Comparación finalizada: 97 resultado(s) generado(s).
+2026-09-04 12:46:48 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 12:49:20 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 12:49:20 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 12:49:20 | INFO     | excel_extractor | Excel 'tmp6d0yl042.xlsx': 96 registro(s) extraído(s).
+2026-09-04 12:49:21 | INFO     | organigrama_extractor | Página 1: 120 caja(s) vectorial(es) detectada(s), 77 puesto(s) extraído(s).
+2026-09-04 12:49:21 | INFO     | organigrama_extractor | Organigrama 'tmp73zz7bg_.pdf': 77 registro(s) extraído(s) en total.
+2026-09-04 12:49:21 | INFO     | comparator | Comparación finalizada: 97 resultado(s) generado(s).
+2026-09-04 12:49:21 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 13:45:34 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 13:45:34 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 13:45:34 | INFO     | excel_extractor | Excel 'tmpn1r7cr4e.xlsx': 49 registro(s) extraído(s).
+2026-09-04 13:45:35 | INFO     | organigrama_extractor | Página 1: 78 caja(s) vectorial(es) detectada(s), 46 puesto(s) extraído(s).
+2026-09-04 13:45:35 | INFO     | organigrama_extractor | Organigrama 'tmpduo90i7_.pdf': 46 registro(s) extraído(s) en total.
+2026-09-04 13:45:35 | INFO     | comparator | Comparación finalizada: 49 resultado(s) generado(s).
+2026-09-04 13:45:35 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 13:46:56 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 13:46:56 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 13:46:56 | INFO     | excel_extractor | Excel 'tmp33twl8e_.xlsx': 70 registro(s) extraído(s).
+2026-09-04 13:46:57 | INFO     | organigrama_extractor | Página 1: 115 caja(s) vectorial(es) detectada(s), 67 puesto(s) extraído(s).
+2026-09-04 13:46:57 | INFO     | organigrama_extractor | Organigrama 'tmpffdyb8dt.pdf': 67 registro(s) extraído(s) en total.
+2026-09-04 13:46:57 | INFO     | comparator | Comparación finalizada: 73 resultado(s) generado(s).
+2026-09-04 13:46:57 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 13:49:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 13:49:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 13:49:28 | INFO     | excel_extractor | Excel 'tmpcjz1wjik.xlsx': 48 registro(s) extraído(s).
+2026-09-04 13:49:28 | INFO     | organigrama_extractor | Página 1: 62 caja(s) vectorial(es) detectada(s), 46 puesto(s) extraído(s).
+2026-09-04 13:49:28 | INFO     | organigrama_extractor | Organigrama 'tmp1_pd81wr.pdf': 46 registro(s) extraído(s) en total.
+2026-09-04 13:49:28 | INFO     | comparator | Comparación finalizada: 50 resultado(s) generado(s).
+2026-09-04 13:49:28 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 13:51:59 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 13:51:59 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 13:51:59 | INFO     | excel_extractor | Excel 'tmpqcekt94p.xlsx': 16 registro(s) extraído(s).
+2026-09-04 13:52:00 | INFO     | organigrama_extractor | Página 1: 20 caja(s) vectorial(es) detectada(s), 13 puesto(s) extraído(s).
+2026-09-04 13:52:00 | INFO     | organigrama_extractor | Organigrama 'tmpqmbre1vm.pdf': 13 registro(s) extraído(s) en total.
+2026-09-04 13:52:00 | INFO     | comparator | Comparación finalizada: 16 resultado(s) generado(s).
+2026-09-04 13:52:00 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:12:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:12:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:12:28 | INFO     | excel_extractor | Excel 'tmp5anxgfla.xlsx': 18 registro(s) extraído(s).
+2026-09-04 14:12:28 | INFO     | organigrama_extractor | Página 1: 25 caja(s) vectorial(es) detectada(s), 17 puesto(s) extraído(s).
+2026-09-04 14:12:28 | INFO     | organigrama_extractor | Organigrama 'tmp6igacsoi.pdf': 17 registro(s) extraído(s) en total.
+2026-09-04 14:12:28 | INFO     | comparator | Comparación finalizada: 21 resultado(s) generado(s).
+2026-09-04 14:12:28 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:13:18 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:13:18 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:13:18 | INFO     | excel_extractor | Excel 'tmpsc66hl3h.xlsx': 28 registro(s) extraído(s).
+2026-09-04 14:13:18 | INFO     | organigrama_extractor | Página 1: 35 caja(s) vectorial(es) detectada(s), 25 puesto(s) extraído(s).
+2026-09-04 14:13:18 | INFO     | organigrama_extractor | Organigrama 'tmpi2ahdnfi.pdf': 25 registro(s) extraído(s) en total.
+2026-09-04 14:13:18 | INFO     | comparator | Comparación finalizada: 28 resultado(s) generado(s).
+2026-09-04 14:13:19 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:13:39 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:13:39 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:13:39 | INFO     | excel_extractor | Excel 'tmp6qpo1xr0.xlsx': 17 registro(s) extraído(s).
+2026-09-04 14:13:39 | INFO     | organigrama_extractor | Página 1: 23 caja(s) vectorial(es) detectada(s), 14 puesto(s) extraído(s).
+2026-09-04 14:13:39 | INFO     | organigrama_extractor | Organigrama 'tmp5z30m2dz.pdf': 14 registro(s) extraído(s) en total.
+2026-09-04 14:13:39 | INFO     | comparator | Comparación finalizada: 17 resultado(s) generado(s).
+2026-09-04 14:13:39 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:14:02 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:14:02 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:14:02 | INFO     | excel_extractor | Excel 'tmpfllttxpr.xlsx': 29 registro(s) extraído(s).
+2026-09-04 14:14:02 | INFO     | organigrama_extractor | Página 1: 39 caja(s) vectorial(es) detectada(s), 27 puesto(s) extraído(s).
+2026-09-04 14:14:02 | INFO     | organigrama_extractor | Organigrama 'tmpqccdomn3.pdf': 27 registro(s) extraído(s) en total.
+2026-09-04 14:14:02 | INFO     | comparator | Comparación finalizada: 30 resultado(s) generado(s).
+2026-09-04 14:14:02 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:15:02 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:15:02 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:15:02 | INFO     | excel_extractor | Excel 'tmps6kzcl82.xlsx': 79 registro(s) extraído(s).
+2026-09-04 14:15:02 | INFO     | organigrama_extractor | Página 1: 108 caja(s) vectorial(es) detectada(s), 74 puesto(s) extraído(s).
+2026-09-04 14:15:02 | INFO     | organigrama_extractor | Organigrama 'tmpr2bf0lq5.pdf': 74 registro(s) extraído(s) en total.
+2026-09-04 14:15:02 | INFO     | comparator | Comparación finalizada: 110 resultado(s) generado(s).
+2026-09-04 14:15:02 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:17:47 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:17:47 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:17:47 | INFO     | excel_extractor | Excel 'tmpvshezsv2.xlsx': 24 registro(s) extraído(s).
+2026-09-04 14:17:47 | INFO     | organigrama_extractor | Página 1: 38 caja(s) vectorial(es) detectada(s), 21 puesto(s) extraído(s).
+2026-09-04 14:17:47 | INFO     | organigrama_extractor | Organigrama 'tmpgm5aezcb.pdf': 21 registro(s) extraído(s) en total.
+2026-09-04 14:17:47 | INFO     | comparator | Comparación finalizada: 24 resultado(s) generado(s).
+2026-09-04 14:17:47 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:18:13 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:18:13 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:18:13 | INFO     | excel_extractor | Excel 'tmpyz6fi338.xlsx': 13 registro(s) extraído(s).
+2026-09-04 14:18:13 | INFO     | organigrama_extractor | Página 1: 19 caja(s) vectorial(es) detectada(s), 10 puesto(s) extraído(s).
+2026-09-04 14:18:13 | INFO     | organigrama_extractor | Organigrama 'tmpz850e24s.pdf': 10 registro(s) extraído(s) en total.
+2026-09-04 14:18:13 | INFO     | comparator | Comparación finalizada: 13 resultado(s) generado(s).
+2026-09-04 14:18:13 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:18:37 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:18:37 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:18:37 | INFO     | excel_extractor | Excel 'tmpddkbwtm_.xlsx': 20 registro(s) extraído(s).
+2026-09-04 14:18:37 | INFO     | organigrama_extractor | Página 1: 23 caja(s) vectorial(es) detectada(s), 14 puesto(s) extraído(s).
+2026-09-04 14:18:37 | INFO     | organigrama_extractor | Organigrama 'tmp8hl3v0bg.pdf': 14 registro(s) extraído(s) en total.
+2026-09-04 14:18:37 | INFO     | comparator | Comparación finalizada: 34 resultado(s) generado(s).
+2026-09-04 14:18:37 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:19:31 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:19:31 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:19:31 | INFO     | excel_extractor | Excel 'tmpqcckojpu.xlsx': 13 registro(s) extraído(s).
+2026-09-04 14:19:31 | INFO     | organigrama_extractor | Página 1: 19 caja(s) vectorial(es) detectada(s), 10 puesto(s) extraído(s).
+2026-09-04 14:19:31 | INFO     | organigrama_extractor | Organigrama 'tmpbfpey3b1.pdf': 10 registro(s) extraído(s) en total.
+2026-09-04 14:19:31 | INFO     | comparator | Comparación finalizada: 13 resultado(s) generado(s).
+2026-09-04 14:19:31 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:19:42 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:19:42 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:19:42 | INFO     | excel_extractor | Excel 'tmpfq_jp_34.xlsx': 20 registro(s) extraído(s).
+2026-09-04 14:19:42 | INFO     | organigrama_extractor | Página 1: 26 caja(s) vectorial(es) detectada(s), 18 puesto(s) extraído(s).
+2026-09-04 14:19:42 | INFO     | organigrama_extractor | Organigrama 'tmphwmlvkdq.pdf': 18 registro(s) extraído(s) en total.
+2026-09-04 14:19:42 | INFO     | comparator | Comparación finalizada: 21 resultado(s) generado(s).
+2026-09-04 14:19:42 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:21:06 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:21:06 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:21:06 | INFO     | excel_extractor | Excel 'tmp55wkk_wq.xlsx': 23 registro(s) extraído(s).
+2026-09-04 14:21:06 | INFO     | organigrama_extractor | Página 1: 34 caja(s) vectorial(es) detectada(s), 21 puesto(s) extraído(s).
+2026-09-04 14:21:06 | INFO     | organigrama_extractor | Organigrama 'tmp3qvpq_p3.pdf': 21 registro(s) extraído(s) en total.
+2026-09-04 14:21:06 | INFO     | comparator | Comparación finalizada: 27 resultado(s) generado(s).
+2026-09-04 14:21:06 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:23:24 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:23:24 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:23:24 | INFO     | excel_extractor | Excel 'tmpv82unfal.xlsx': 23 registro(s) extraído(s).
+2026-09-04 14:23:24 | INFO     | organigrama_extractor | Página 1: 34 caja(s) vectorial(es) detectada(s), 21 puesto(s) extraído(s).
+2026-09-04 14:23:24 | INFO     | organigrama_extractor | Organigrama 'tmpi27bn_a7.pdf': 21 registro(s) extraído(s) en total.
+2026-09-04 14:23:24 | INFO     | comparator | Comparación finalizada: 27 resultado(s) generado(s).
+2026-09-04 14:23:24 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:24:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:24:28 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:24:28 | INFO     | excel_extractor | Excel 'tmpzo8iysf9.xlsx': 11 registro(s) extraído(s).
+2026-09-04 14:24:28 | INFO     | organigrama_extractor | Página 1: 11 caja(s) vectorial(es) detectada(s), 8 puesto(s) extraído(s).
+2026-09-04 14:24:28 | INFO     | organigrama_extractor | Organigrama 'tmp78hk3ahw.pdf': 8 registro(s) extraído(s) en total.
+2026-09-04 14:24:28 | INFO     | comparator | Comparación finalizada: 11 resultado(s) generado(s).
+2026-09-04 14:24:28 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:24:52 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:24:52 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:24:52 | INFO     | excel_extractor | Excel 'tmpmxqh0ds_.xlsx': 16 registro(s) extraído(s).
+2026-09-04 14:24:52 | INFO     | organigrama_extractor | Página 1: 11 caja(s) vectorial(es) detectada(s), 8 puesto(s) extraído(s).
+2026-09-04 14:24:52 | INFO     | organigrama_extractor | Organigrama 'tmpmdvtjfgx.pdf': 8 registro(s) extraído(s) en total.
+2026-09-04 14:24:52 | INFO     | comparator | Comparación finalizada: 21 resultado(s) generado(s).
+2026-09-04 14:24:52 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:25:18 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:25:18 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:25:18 | INFO     | excel_extractor | Excel 'tmp40822hex.xlsx': 16 registro(s) extraído(s).
+2026-09-04 14:25:18 | INFO     | organigrama_extractor | Página 1: 22 caja(s) vectorial(es) detectada(s), 13 puesto(s) extraído(s).
+2026-09-04 14:25:18 | INFO     | organigrama_extractor | Organigrama 'tmpclyrh3jo.pdf': 13 registro(s) extraído(s) en total.
+2026-09-04 14:25:18 | INFO     | comparator | Comparación finalizada: 16 resultado(s) generado(s).
+2026-09-04 14:25:18 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:25:37 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:25:37 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:25:37 | INFO     | excel_extractor | Excel 'tmpaonzkb71.xlsx': 14 registro(s) extraído(s).
+2026-09-04 14:25:38 | INFO     | organigrama_extractor | Página 1: 20 caja(s) vectorial(es) detectada(s), 11 puesto(s) extraído(s).
+2026-09-04 14:25:38 | INFO     | organigrama_extractor | Organigrama 'tmpebfv2f1n.pdf': 11 registro(s) extraído(s) en total.
+2026-09-04 14:25:38 | INFO     | comparator | Comparación finalizada: 14 resultado(s) generado(s).
+2026-09-04 14:25:38 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:26:07 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:26:07 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:26:07 | INFO     | excel_extractor | Excel 'tmpf8i619id.xlsx': 29 registro(s) extraído(s).
+2026-09-04 14:26:07 | INFO     | organigrama_extractor | Página 1: 45 caja(s) vectorial(es) detectada(s), 26 puesto(s) extraído(s).
+2026-09-04 14:26:07 | INFO     | organigrama_extractor | Organigrama 'tmp4c96zou8.pdf': 26 registro(s) extraído(s) en total.
+2026-09-04 14:26:07 | INFO     | comparator | Comparación finalizada: 29 resultado(s) generado(s).
+2026-09-04 14:26:07 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:27:29 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:27:29 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:27:29 | INFO     | excel_extractor | Excel 'tmp7om6phd5.xlsx': 38 registro(s) extraído(s).
+2026-09-04 14:27:29 | INFO     | organigrama_extractor | Página 1: 46 caja(s) vectorial(es) detectada(s), 35 puesto(s) extraído(s).
+2026-09-04 14:27:29 | INFO     | organigrama_extractor | Organigrama 'tmpevdyngew.pdf': 35 registro(s) extraído(s) en total.
+2026-09-04 14:27:29 | INFO     | comparator | Comparación finalizada: 39 resultado(s) generado(s).
+2026-09-04 14:27:29 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:52:18 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:52:18 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:52:18 | INFO     | excel_extractor | Excel 'tmpdsuy_tn0.xlsx': 38 registro(s) extraído(s).
+2026-09-04 14:52:18 | INFO     | organigrama_extractor | Página 1: 46 caja(s) vectorial(es) detectada(s), 35 puesto(s) extraído(s).
+2026-09-04 14:52:18 | INFO     | organigrama_extractor | Organigrama 'tmpmdgfly7o.pdf': 35 registro(s) extraído(s) en total.
+2026-09-04 14:52:18 | INFO     | comparator | Comparación finalizada: 38 resultado(s) generado(s).
+2026-09-04 14:52:18 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:54:12 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:54:12 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:54:12 | INFO     | excel_extractor | Excel 'tmpb5vhmhb1.xlsx': 26 registro(s) extraído(s).
+2026-09-04 14:54:12 | INFO     | organigrama_extractor | Página 1: 33 caja(s) vectorial(es) detectada(s), 23 puesto(s) extraído(s).
+2026-09-04 14:54:12 | INFO     | organigrama_extractor | Organigrama 'tmprxon8ljx.pdf': 23 registro(s) extraído(s) en total.
+2026-09-04 14:54:12 | INFO     | comparator | Comparación finalizada: 26 resultado(s) generado(s).
+2026-09-04 14:54:12 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:56:21 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:56:21 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:56:21 | INFO     | excel_extractor | Excel 'tmpc_8c5m4a.xlsx': 26 registro(s) extraído(s).
+2026-09-04 14:56:21 | INFO     | organigrama_extractor | Página 1: 33 caja(s) vectorial(es) detectada(s), 23 puesto(s) extraído(s).
+2026-09-04 14:56:21 | INFO     | organigrama_extractor | Organigrama 'tmp4rbkhbpp.pdf': 23 registro(s) extraído(s) en total.
+2026-09-04 14:56:21 | INFO     | comparator | Comparación finalizada: 26 resultado(s) generado(s).
+2026-09-04 14:56:21 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:56:54 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:56:54 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:56:54 | INFO     | excel_extractor | Excel 'tmpul30t18f.xlsx': 17 registro(s) extraído(s).
+2026-09-04 14:56:54 | INFO     | organigrama_extractor | Página 1: 23 caja(s) vectorial(es) detectada(s), 14 puesto(s) extraído(s).
+2026-09-04 14:56:54 | INFO     | organigrama_extractor | Organigrama 'tmpyns27gmg.pdf': 14 registro(s) extraído(s) en total.
+2026-09-04 14:56:54 | INFO     | comparator | Comparación finalizada: 17 resultado(s) generado(s).
+2026-09-04 14:56:54 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:58:18 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:58:18 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:58:18 | INFO     | excel_extractor | Excel 'tmp0ofgxf0u.xlsx': 33 registro(s) extraído(s).
+2026-09-04 14:58:18 | INFO     | organigrama_extractor | Página 1: 49 caja(s) vectorial(es) detectada(s), 30 puesto(s) extraído(s).
+2026-09-04 14:58:18 | INFO     | organigrama_extractor | Organigrama 'tmp16_wila_.pdf': 30 registro(s) extraído(s) en total.
+2026-09-04 14:58:18 | INFO     | comparator | Comparación finalizada: 33 resultado(s) generado(s).
+2026-09-04 14:58:18 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 14:58:39 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 14:58:39 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 14:58:39 | INFO     | excel_extractor | Excel 'tmpmeavb5wg.xlsx': 7 registro(s) extraído(s).
+2026-09-04 14:58:39 | INFO     | organigrama_extractor | Página 1: 7 caja(s) vectorial(es) detectada(s), 4 puesto(s) extraído(s).
+2026-09-04 14:58:39 | INFO     | organigrama_extractor | Organigrama 'tmpf57welrh.pdf': 4 registro(s) extraído(s) en total.
+2026-09-04 14:58:39 | INFO     | comparator | Comparación finalizada: 7 resultado(s) generado(s).
+2026-09-04 14:58:39 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 15:01:38 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 15:01:38 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 15:01:38 | INFO     | excel_extractor | Excel 'tmpqmyduit9.xlsx': 20 registro(s) extraído(s).
+2026-09-04 15:01:38 | INFO     | organigrama_extractor | Página 1: 29 caja(s) vectorial(es) detectada(s), 18 puesto(s) extraído(s).
+2026-09-04 15:01:38 | INFO     | organigrama_extractor | Organigrama 'tmp7dlzgyim.pdf': 18 registro(s) extraído(s) en total.
+2026-09-04 15:01:38 | INFO     | comparator | Comparación finalizada: 21 resultado(s) generado(s).
+2026-09-04 15:01:38 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 15:02:53 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 15:02:53 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 15:02:53 | INFO     | excel_extractor | Excel 'tmp4ebuyuj5.xlsx': 14 registro(s) extraído(s).
+2026-09-04 15:02:53 | INFO     | organigrama_extractor | Página 1: 20 caja(s) vectorial(es) detectada(s), 11 puesto(s) extraído(s).
+2026-09-04 15:02:53 | INFO     | organigrama_extractor | Organigrama 'tmpw4y5o304.pdf': 11 registro(s) extraído(s) en total.
+2026-09-04 15:02:53 | INFO     | comparator | Comparación finalizada: 14 resultado(s) generado(s).
+2026-09-04 15:02:53 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 15:03:13 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 15:03:13 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 15:03:13 | INFO     | excel_extractor | Excel 'tmpm0na9_8q.xlsx': 61 registro(s) extraído(s).
+2026-09-04 15:03:13 | INFO     | organigrama_extractor | Página 1: 79 caja(s) vectorial(es) detectada(s), 58 puesto(s) extraído(s).
+2026-09-04 15:03:13 | INFO     | organigrama_extractor | Organigrama 'tmprwdtufxh.pdf': 58 registro(s) extraído(s) en total.
+2026-09-04 15:03:13 | INFO     | comparator | Comparación finalizada: 61 resultado(s) generado(s).
+2026-09-04 15:03:13 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 15:03:35 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 15:03:35 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 15:03:35 | INFO     | excel_extractor | Excel 'tmpx5ah8r3n.xlsx': 14 registro(s) extraído(s).
+2026-09-04 15:03:35 | INFO     | organigrama_extractor | Página 1: 14 caja(s) vectorial(es) detectada(s), 11 puesto(s) extraído(s).
+2026-09-04 15:03:35 | INFO     | organigrama_extractor | Organigrama 'tmphaerv6w8.pdf': 11 registro(s) extraído(s) en total.
+2026-09-04 15:03:35 | INFO     | comparator | Comparación finalizada: 14 resultado(s) generado(s).
+2026-09-04 15:03:35 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 15:03:55 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 15:03:55 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 15:03:55 | INFO     | excel_extractor | Excel 'tmph1i3tz6s.xlsx': 27 registro(s) extraído(s).
+2026-09-04 15:03:55 | INFO     | organigrama_extractor | Página 1: 37 caja(s) vectorial(es) detectada(s), 24 puesto(s) extraído(s).
+2026-09-04 15:03:55 | INFO     | organigrama_extractor | Organigrama 'tmpgstrf8q_.pdf': 24 registro(s) extraído(s) en total.
+2026-09-04 15:03:55 | INFO     | comparator | Comparación finalizada: 27 resultado(s) generado(s).
+2026-09-04 15:03:55 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 15:04:12 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 15:04:12 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 15:04:12 | INFO     | excel_extractor | Excel 'tmp8l3rwct7.xlsx': 18 registro(s) extraído(s).
+2026-09-04 15:04:12 | INFO     | organigrama_extractor | Página 1: 24 caja(s) vectorial(es) detectada(s), 15 puesto(s) extraído(s).
+2026-09-04 15:04:12 | INFO     | organigrama_extractor | Organigrama 'tmpc0j40tm2.pdf': 15 registro(s) extraído(s) en total.
+2026-09-04 15:04:12 | INFO     | comparator | Comparación finalizada: 18 resultado(s) generado(s).
+2026-09-04 15:04:12 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 15:04:31 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 15:04:31 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 15:04:31 | INFO     | excel_extractor | Excel 'tmpatvku9_9.xlsx': 26 registro(s) extraído(s).
+2026-09-04 15:04:31 | INFO     | organigrama_extractor | Página 1: 34 caja(s) vectorial(es) detectada(s), 23 puesto(s) extraído(s).
+2026-09-04 15:04:31 | INFO     | organigrama_extractor | Organigrama 'tmpq_1wpktu.pdf': 23 registro(s) extraído(s) en total.
+2026-09-04 15:04:31 | INFO     | comparator | Comparación finalizada: 27 resultado(s) generado(s).
+2026-09-04 15:04:31 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-04 15:36:19 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': 8 rango(s) de celdas combinadas detectado(s).
+2026-09-04 15:36:19 | INFO     | excel_extractor | Hoja 'PUESTOS Y COSTOS': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-04 15:36:19 | INFO     | excel_extractor | Excel 'tmpvi22ccrg.xlsx': 62 registro(s) extraído(s).
+2026-09-04 15:36:19 | INFO     | organigrama_extractor | Página 1: 98 caja(s) vectorial(es) detectada(s), 60 puesto(s) extraído(s).
+2026-09-04 15:36:19 | INFO     | organigrama_extractor | Organigrama 'tmpflna_xbm.pdf': 60 registro(s) extraído(s) en total.
+2026-09-04 15:36:19 | INFO     | comparator | Comparación finalizada: 79 resultado(s) generado(s).
+2026-09-04 15:36:19 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx

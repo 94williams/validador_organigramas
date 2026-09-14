@@ -1,0 +1,23 @@
+# --- Núcleo ---
+pandas>=2.0
+openpyxl>=3.1
+PyMuPDF>=1.23
+pdfplumber>=0.10
+python-docx>=1.1
+rapidfuzz>=3.5
+
+# --- Interfaz gráfica ---
+streamlit>=1.30
+
+# --- OCR (opcional; solo necesario si se procesan PDFs escaneados) ---
+pytesseract>=0.3.10
+pillow>=10.0
+
+# --- Pruebas ---
+pytest>=7.4
+
+# --- Ollama (OPCIONAL; solo necesario si config.OLLAMA_ENABLED = True) ---
+# Cliente HTTP para consultar un servidor Ollama LOCAL como segunda opinión
+# semántica en casos ambiguos. Si no se instala, o si OLLAMA_ENABLED es
+# False (valor por defecto), el resto del programa funciona sin cambios.
+requests>=2.31
