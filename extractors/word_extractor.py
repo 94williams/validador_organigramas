@@ -113,12 +113,33 @@ def _extraer_por_patron_de_linea(texto_pagina: str, nombre_archivo: str, pagina:
     tabla — para que quede identificable en el reporte y trazabilidad.
     """
     registros = []
+    linea_pendiente = None
+    num_linea_pendiente = None
+
     for num_linea, linea in enumerate(texto_pagina.splitlines(), start=1):
         linea = linea.strip()
         if not linea or texto_parece_ruido(linea, config.WORD_FILAS_IGNORAR_PATRONES):
             continue
 
         m = _PATRON_FILA_CON_CANTIDAD.match(linea)
+        if not m and linea_pendiente is not None:
+            linea_completa = f"{linea_pendiente} {linea}"
+            m = _PATRON_FILA_CON_CANTIDAD.match(linea_completa)
+            if m:
+                linea = linea_completa
+                num_linea = num_linea_pendiente
+                linea_pendiente = None
+                num_linea_pendiente = None
+
+        if m and linea_pendiente is not None:
+            linea_pendiente = None
+            num_linea_pendiente = None
+
+        if not m and linea_pendiente is None and re.match(r"^\d{1,3}\s+", linea):
+            linea_pendiente = linea
+            num_linea_pendiente = num_linea
+            continue
+
         if m:
             cantidad, puesto, nivel = m.group(1), m.group(2).strip(), m.group(3)
         else:
@@ -144,6 +165,7 @@ def _extraer_por_patron_de_linea(texto_pagina: str, nombre_archivo: str, pagina:
             confianza_extraccion=0.9,
             cantidad=cantidad,
         ))
+
     return registros
 
 

@@ -11,7 +11,11 @@ import docx
 import pytest
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from extractors.word_extractor import extraer_word, _encontrar_indices_columnas  # noqa: E402
+from extractors.word_extractor import (  # noqa: E402
+    _encontrar_indices_columnas,
+    _extraer_por_patron_de_linea,
+    extraer_word,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -112,6 +116,22 @@ def test_tabla_sin_bordes_se_recupera_con_patron_de_linea(tmp_path):
     assert all(r.nivel_original for r in registros)
     # se generaron por el respaldo de patrón de línea -> confianza reducida
     assert all(r.confianza_extraccion < 1.0 for r in registros)
+
+
+def test_fila_pdf_envuelta_conserva_nombre_completo():
+    texto = (
+        '1 Jefatura de Unidad Departamental de Seguimiento y Control de Información Contable\n'
+        'y Financiera "A" 25\n'
+    )
+
+    registros = _extraer_por_patron_de_linea(texto, "prueba.pdf", 1)
+
+    assert len(registros) == 1
+    assert registros[0].puesto_original == (
+        'Jefatura de Unidad Departamental de Seguimiento y Control de Información Contable '
+        'y Financiera "A"'
+    )
+    assert registros[0].nivel_original == "25"
 
 
 # ---------------------------------------------------------------------------

@@ -438,3 +438,123 @@
 2026-09-04 15:36:19 | INFO     | organigrama_extractor | Organigrama 'tmpflna_xbm.pdf': 60 registro(s) extraído(s) en total.
 2026-09-04 15:36:19 | INFO     | comparator | Comparación finalizada: 79 resultado(s) generado(s).
 2026-09-04 15:36:19 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\reporte_inconsistencias.xlsx
+2026-09-15 12:01:51 | INFO     | word_extractor | Word (.docx) 'prueba.docx': 1 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:06:15 | INFO     | word_extractor | Word (.docx) 'prueba.docx': 1 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:06:15 | INFO     | word_extractor | Word (.docx) 'prueba.docx': 6 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:06:15 | INFO     | word_extractor | Word (.docx) 'prueba.docx': 2 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:06:41 | INFO     | word_extractor | Word (.docx) 'prueba.docx': 1 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 3 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 3 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 2 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 2 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 2 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 2 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 2 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 2 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | excel_extractor | Hoja 'Puestos': encabezados detectados en fila 1 (puesto=B, nivel=C)
+2026-09-15 12:07:02 | INFO     | excel_extractor | Excel 'excel_puestos.xlsx': 1 registro(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | excel_extractor | Hoja 'Puestos': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-15 12:07:02 | INFO     | excel_extractor | Excel 'referencia.xlsx': 7 registro(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Página 1: 5 caja(s) vectorial(es) detectada(s), 5 puesto(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Página 2: 1 caja(s) vectorial(es) detectada(s), 1 puesto(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Organigrama 'organigrama.pdf': 6 registro(s) extraído(s) en total.
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 9 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | excel_extractor | Hoja 'Puestos': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-15 12:07:02 | INFO     | excel_extractor | Excel 'referencia.xlsx': 7 registro(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | word_extractor | Word (.docx) 'documento_word.docx': 6 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Página 1: 5 caja(s) vectorial(es) detectada(s), 5 puesto(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Página 2: 1 caja(s) vectorial(es) detectada(s), 1 puesto(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Organigrama 'organigrama.pdf': 6 registro(s) extraído(s) en total.
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 10 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | excel_extractor | Hoja 'Puestos': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-15 12:07:02 | INFO     | excel_extractor | Excel 'referencia.xlsx': 7 registro(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Página 1: 5 caja(s) vectorial(es) detectada(s), 5 puesto(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Página 2: 1 caja(s) vectorial(es) detectada(s), 1 puesto(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Organigrama 'organigrama.pdf': 6 registro(s) extraído(s) en total.
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 9 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\pytest-of-Williams Work\pytest-2\test_reporte_modo_excel_organi0\reporte.xlsx
+2026-09-15 12:07:02 | INFO     | excel_extractor | Hoja 'Puestos': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-15 12:07:02 | INFO     | excel_extractor | Excel 'referencia.xlsx': 7 registro(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | word_extractor | Word (.docx) 'documento_word.docx': 6 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Página 1: 5 caja(s) vectorial(es) detectada(s), 5 puesto(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Página 2: 1 caja(s) vectorial(es) detectada(s), 1 puesto(s) extraído(s).
+2026-09-15 12:07:02 | INFO     | organigrama_extractor | Organigrama 'organigrama.pdf': 6 registro(s) extraído(s) en total.
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 10 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | excel_report | Reporte generado en: C:\Users\Public\Documents\Wondershare\CreatorTemp\pytest-of-Williams Work\pytest-2\test_reporte_modo_completo_si_0\reporte.xlsx
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | INFO     | comparator | Comparación finalizada: 1 resultado(s) generado(s).
+2026-09-15 12:07:02 | WARNING  | ollama_client | Ollama no disponible o falló la consulta (servidor no disponible); el caso queda en revisión manual.
+2026-09-15 12:07:03 | WARNING  | ollama_client | Ollama no disponible o falló la consulta (Expecting value: line 1 column 1 (char 0)); el caso queda en revisión manual.
+2026-09-15 12:07:03 | WARNING  | ollama_client | Ollama respondió un JSON con forma inesperada: {'es_mismo_puesto': True}; se descarta.
+2026-09-15 12:07:03 | INFO     | ollama_client | Respuesta de Ollama tomada de caché (sin nueva consulta).
+2026-09-15 12:07:03 | INFO     | organigrama_extractor | Página 1: 40 caja(s) vectorial(es) detectada(s), 27 puesto(s) extraído(s).
+2026-09-15 12:07:03 | INFO     | organigrama_extractor | Página 2: 101 caja(s) vectorial(es) detectada(s), 62 puesto(s) extraído(s).
+2026-09-15 12:07:03 | INFO     | organigrama_extractor | Página 3: 53 caja(s) vectorial(es) detectada(s), 32 puesto(s) extraído(s).
+2026-09-15 12:07:03 | INFO     | organigrama_extractor | Página 4: 94 caja(s) vectorial(es) detectada(s), 53 puesto(s) extraído(s).
+2026-09-15 12:07:03 | INFO     | organigrama_extractor | Página 5: 60 caja(s) vectorial(es) detectada(s), 37 puesto(s) extraído(s).
+2026-09-15 12:07:04 | INFO     | organigrama_extractor | Página 6: 91 caja(s) vectorial(es) detectada(s), 62 puesto(s) extraído(s).
+2026-09-15 12:07:04 | INFO     | organigrama_extractor | Página 7: 18 caja(s) vectorial(es) detectada(s), 11 puesto(s) extraído(s).
+2026-09-15 12:07:04 | INFO     | organigrama_extractor | Organigrama 'organigrama_real.pdf': 284 registro(s) extraído(s) en total.
+2026-09-15 12:07:04 | INFO     | organigrama_extractor | Página 1: 40 caja(s) vectorial(es) detectada(s), 27 puesto(s) extraído(s).
+2026-09-15 12:07:04 | INFO     | organigrama_extractor | Página 2: 101 caja(s) vectorial(es) detectada(s), 62 puesto(s) extraído(s).
+2026-09-15 12:07:04 | INFO     | organigrama_extractor | Página 3: 53 caja(s) vectorial(es) detectada(s), 32 puesto(s) extraído(s).
+2026-09-15 12:07:05 | INFO     | organigrama_extractor | Página 4: 94 caja(s) vectorial(es) detectada(s), 53 puesto(s) extraído(s).
+2026-09-15 12:07:05 | INFO     | organigrama_extractor | Página 5: 60 caja(s) vectorial(es) detectada(s), 37 puesto(s) extraído(s).
+2026-09-15 12:07:05 | INFO     | organigrama_extractor | Página 6: 91 caja(s) vectorial(es) detectada(s), 62 puesto(s) extraído(s).
+2026-09-15 12:07:05 | INFO     | organigrama_extractor | Página 7: 18 caja(s) vectorial(es) detectada(s), 11 puesto(s) extraído(s).
+2026-09-15 12:07:05 | INFO     | organigrama_extractor | Organigrama 'organigrama_real.pdf': 284 registro(s) extraído(s) en total.
+2026-09-15 12:07:05 | INFO     | organigrama_extractor | Página 1: 40 caja(s) vectorial(es) detectada(s), 27 puesto(s) extraído(s).
+2026-09-15 12:07:05 | INFO     | organigrama_extractor | Página 2: 101 caja(s) vectorial(es) detectada(s), 62 puesto(s) extraído(s).
+2026-09-15 12:07:06 | INFO     | organigrama_extractor | Página 3: 53 caja(s) vectorial(es) detectada(s), 32 puesto(s) extraído(s).
+2026-09-15 12:07:06 | INFO     | organigrama_extractor | Página 4: 94 caja(s) vectorial(es) detectada(s), 53 puesto(s) extraído(s).
+2026-09-15 12:07:06 | INFO     | organigrama_extractor | Página 5: 60 caja(s) vectorial(es) detectada(s), 37 puesto(s) extraído(s).
+2026-09-15 12:07:06 | INFO     | organigrama_extractor | Página 6: 91 caja(s) vectorial(es) detectada(s), 62 puesto(s) extraído(s).
+2026-09-15 12:07:06 | INFO     | organigrama_extractor | Página 7: 18 caja(s) vectorial(es) detectada(s), 11 puesto(s) extraído(s).
+2026-09-15 12:07:06 | INFO     | organigrama_extractor | Organigrama 'organigrama_real.pdf': 284 registro(s) extraído(s) en total.
+2026-09-15 12:07:06 | INFO     | organigrama_extractor | Página 1: 40 caja(s) vectorial(es) detectada(s), 27 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 2: 101 caja(s) vectorial(es) detectada(s), 62 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 3: 53 caja(s) vectorial(es) detectada(s), 32 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 4: 94 caja(s) vectorial(es) detectada(s), 53 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 5: 60 caja(s) vectorial(es) detectada(s), 37 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 6: 91 caja(s) vectorial(es) detectada(s), 62 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 7: 18 caja(s) vectorial(es) detectada(s), 11 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Organigrama 'organigrama_real.pdf': 284 registro(s) extraído(s) en total.
+2026-09-15 12:07:07 | INFO     | excel_extractor | Hoja 'Puestos': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-15 12:07:07 | INFO     | excel_extractor | Excel 'referencia.xlsx': 7 registro(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | word_extractor | Word (.docx) 'documento_word.docx': 6 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 1: 5 caja(s) vectorial(es) detectada(s), 5 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 2: 1 caja(s) vectorial(es) detectada(s), 1 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Organigrama 'organigrama.pdf': 6 registro(s) extraído(s) en total.
+2026-09-15 12:07:07 | INFO     | comparator | Comparación finalizada: 10 resultado(s) generado(s).
+2026-09-15 12:07:07 | INFO     | excel_extractor | Hoja 'Puestos': encabezados detectados en fila 1 (puesto=J, nivel=K)
+2026-09-15 12:07:07 | INFO     | excel_extractor | Excel 'referencia.xlsx': 7 registro(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | word_extractor | Word (.docx) 'documento_word.docx': 6 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 1: 5 caja(s) vectorial(es) detectada(s), 5 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Página 2: 1 caja(s) vectorial(es) detectada(s), 1 puesto(s) extraído(s).
+2026-09-15 12:07:07 | INFO     | organigrama_extractor | Organigrama 'organigrama.pdf': 6 registro(s) extraído(s) en total.
+2026-09-15 12:07:07 | INFO     | comparator | Comparación finalizada: 10 resultado(s) generado(s).
+2026-09-15 12:07:16 | INFO     | word_extractor | Word (.docx) 'prueba.docx': 1 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:07:16 | INFO     | word_extractor | Word (.docx) 'prueba.docx': 6 registro(s) extraído(s) de 1 tabla(s).
+2026-09-15 12:07:16 | INFO     | word_extractor | Word (.docx) 'prueba.docx': 2 registro(s) extraído(s) de 1 tabla(s).

@@ -1,0 +1,9 @@
+{
+  "{\"excel_o_word\": \"JUD de X\", \"niveles_permitidos\": [27, 25], \"otra_fuente\": \"JUD de Y\", \"tipo_catalogo\": \"jud\"}": {
+    "es_mismo_puesto": true,
+    "confianza": 0.96,
+    "coincidencia_nombre_especifico": true,
+    "requiere_revision_humana": false,
+    "explicacion": "ok"
+  }
+}
