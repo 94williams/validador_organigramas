@@ -23,35 +23,36 @@ from openpyxl.utils import get_column_letter
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from models.models import ComparisonResult, TipoInconsistencia  # noqa: E402
+from normalization.canonical_display import abreviar_puesto_canonico  # noqa: E402
 from utils.logger import get_logger  # noqa: E402
 
 logger = get_logger("excel_report")
 
 COLOR_POR_TIPO = {
-    TipoInconsistencia.OK: "C6EFCE",                          # verde
-    TipoInconsistencia.COINCIDE_NORMALIZADO: "D9E1F2",        # azul claro
-    TipoInconsistencia.COINCIDE_EQUIVALENCIA: "B4C7E7",       # azul medio (equivalencia institucional)
+    TipoInconsistencia.OK: "C6EFCE",
+    TipoInconsistencia.COINCIDE_NORMALIZADO: "D9E1F2",
+    TipoInconsistencia.COINCIDE_EQUIVALENCIA: "B4C7E7",
     TipoInconsistencia.DIFERENCIA_FORMATO: "D9E1F2",
-    TipoInconsistencia.POSIBLE_COINCIDENCIA: "FFEB9C",        # amarillo
+    TipoInconsistencia.POSIBLE_COINCIDENCIA: "FFEB9C",
     TipoInconsistencia.REQUIERE_REVISION: "FFEB9C",
-    TipoInconsistencia.COINCIDE_IA: "C9C1F5",                 # lila (resuelto por IA)
-    TipoInconsistencia.NIVEL_INCONSISTENTE: "FFC7CE",         # rojo claro
-    TipoInconsistencia.NIVEL_FALTANTE: "FFD966",              # naranja
+    TipoInconsistencia.COINCIDE_IA: "C9C1F5",
+    TipoInconsistencia.NIVEL_INCONSISTENTE: "FFC7CE",
+    TipoInconsistencia.NIVEL_FALTANTE: "FFD966",
     TipoInconsistencia.NIVEL_FORMATO_INVALIDO: "FFD966",
     TipoInconsistencia.PUESTO_FALTANTE: "FFC7CE",
-    TipoInconsistencia.PUESTO_ADICIONAL: "F4B183",            # naranja fuerte
-    TipoInconsistencia.DUPLICADO: "E2C6F0",                   # morado claro
+    TipoInconsistencia.PUESTO_ADICIONAL: "F4B183",
+    TipoInconsistencia.DUPLICADO: "E2C6F0",
     TipoInconsistencia.DUPLICADO_NIVEL_DISTINTO: "C586DB",
-    TipoInconsistencia.ERROR_EXTRACCION: "808080",            # gris
+    TipoInconsistencia.ERROR_EXTRACCION: "808080",
 }
 
 _ENCABEZADOS_INICIO = [
     "Puesto (clave normalizada)", "Puesto canónico",
     "Tipo de puesto", "Nombre específico", "Niveles según catálogo",
-    "Excel - Original", "Excel - Nivel", "Excel - Estado de nivel",
+    "Excel - Original", "Excel - Asimilado", "Excel - Nivel", "Excel - Estado de nivel",
 ]
 _ENCABEZADOS_WORD = [
-    "Word - Original", "Word - Nivel", "Word - Estado de nivel",
+    "Word - Original", "Word - Asimilado", "Word - Nivel", "Word - Estado de nivel",
 ]
 _ENCABEZADOS_FIN = [
     "Organigrama - Original", "Organigrama - Nivel", "Organigrama - Estado de nivel",
@@ -80,24 +81,34 @@ def _fila_desde_resultado(r: ComparisonResult, modo) -> list:
         valor = getattr(record, atributo)
         return valor if valor not in (None, "") else default
 
+    def puesto_asimilado(record):
+        if record is None:
+            return "—"
+        return abreviar_puesto_canonico(record.puesto_original) or "—"
+
     resultado_general = "OK" if r.tipo_inconsistencia == TipoInconsistencia.OK else "Revisar"
 
     representativo = r.excel or r.word or r.organigrama
     tipo_puesto = representativo.tipo_puesto_display if representativo else ""
     nombre_especifico = representativo.nombre_especifico if representativo else ""
     niveles_catalogo = ", ".join(str(n) for n in representativo.niveles_catalogo) if representativo and representativo.niveles_catalogo else "—"
+    puesto_canonico = abreviar_puesto_canonico(representativo.puesto_original) if representativo else ""
 
     def estado_nivel(record):
         return record.estado_nivel.value if (record is not None and record.estado_nivel is not None) else "—"
 
     fila = [
         r.puesto_clave_normalizada,
-        r.puesto_canonico or r.puesto_clave_normalizada,
+        puesto_canonico or r.puesto_canonico or r.puesto_clave_normalizada,
         tipo_puesto, nombre_especifico, niveles_catalogo,
-        campo(r.excel, "puesto_original"), campo(r.excel, "nivel_original", "N/D"), estado_nivel(r.excel),
+        campo(r.excel, "puesto_original"), puesto_asimilado(r.excel),
+        campo(r.excel, "nivel_original", "N/D"), estado_nivel(r.excel),
     ]
     if _incluye_word(modo):
-        fila += [campo(r.word, "puesto_original"), campo(r.word, "nivel_original", "N/D"), estado_nivel(r.word)]
+        fila += [
+            campo(r.word, "puesto_original"), puesto_asimilado(r.word),
+            campo(r.word, "nivel_original", "N/D"), estado_nivel(r.word),
+        ]
     fila += [
         campo(r.organigrama, "puesto_original"), campo(r.organigrama, "nivel_original", "N/D"), estado_nivel(r.organigrama),
         resultado_general,
