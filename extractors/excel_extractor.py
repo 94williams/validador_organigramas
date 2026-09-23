@@ -26,6 +26,30 @@ from utils.logger import get_logger  # noqa: E402
 logger = get_logger("excel_extractor")
 
 
+# Valores administrativos/de resumen que pueden aparecer en la columna de
+# puesto (por ejemplo, la columna J) pero no representan un puesto real.
+# Se guardan ya normalizados para que el filtro tolere mayúsculas, acentos,
+# puntos y espacios extra sin afectar puestos legítimos.
+_EXCEL_PUESTOS_IGNORADOS = {
+    normalizar_puesto("INTEGRÓ"),
+    normalizar_puesto("TITULAR DE UNIDAD ADMINISTRATIVA"),
+    normalizar_puesto("TOTAL"),
+    normalizar_puesto("TOTAL ACTUAL"),
+    normalizar_puesto("TOTAL PROPUESTO"),
+    normalizar_puesto("VARIACIÓN EN COSTO"),
+    normalizar_puesto("NO. PLAZAS ACTUAL"),
+    normalizar_puesto("NO. PLAZAS PROPUESTA"),
+    normalizar_puesto("VARIACIÓN EN PLAZAS"),
+}
+
+
+def _es_fila_ignorada_excel(valor) -> bool:
+    """True cuando la celda contiene un rótulo administrativo/resumen."""
+    if valor is None:
+        return False
+    return normalizar_puesto(str(valor)) in _EXCEL_PUESTOS_IGNORADOS
+
+
 def _texto_encabezado_coincide(valor, candidatos: List[str]) -> bool:
     if valor is None:
         return False
@@ -67,7 +91,7 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
        cualquiera de las hojas (o solo en `hoja` si se especifica).
     2. Si no se encuentran encabezados, usar el fallback de columnas fijas
        (config.EXCEL_FALLBACK_COL_PUESTO / _NIVEL), asumiendo fila 1 = header.
-    3. Ignorar filas completamente vacías.
+    3. Ignorar filas vacías y rótulos administrativos/de resumen.
     4. Registrar celdas combinadas como advertencia (no error fatal).
     """
     registros: List[PuestoRecord] = []
@@ -126,6 +150,12 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
 
             if val_puesto is None or not str(val_puesto).strip():
                 continue  # fila vacía en la columna clave, se ignora silenciosamente
+
+            if _es_fila_ignorada_excel(val_puesto):
+                logger.debug(
+                    f"Hoja '{nombre_hoja}', fila {fila_idx}: rótulo administrativo/resumen ignorado: {val_puesto!r}"
+                )
+                continue
 
             puesto_str = str(val_puesto).strip()
             nivel_str = None if val_nivel is None else val_nivel
