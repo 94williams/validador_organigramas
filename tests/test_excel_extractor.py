@@ -32,14 +32,13 @@ def test_excel_ignora_rotulos_administrativos_y_totales_en_columna_j(tmp_path):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Puestos"
-
-    # Fuerza el fallback tradicional J/K del archivo real.
     ws["J1"] = "PUESTO"
     ws["K1"] = "NIVEL"
 
     valores_ignorados = [
         "INTEGRÓ",
         "Titular de Unidad Administrativa",
+        "Titular del Área de Administración",
         "TOTAL",
         "TOTAL ACTUAL",
         "TOTAL PROPUESTO",
@@ -55,8 +54,6 @@ def test_excel_ignora_rotulos_administrativos_y_totales_en_columna_j(tmp_path):
         ws.cell(row=fila, column=11, value="25")
         fila += 1
 
-    # Un puesto real debe conservarse para demostrar que el filtro no elimina
-    # registros legítimos de la misma columna.
     ws.cell(row=fila, column=10, value="Jefatura de Unidad Departamental de Recursos Humanos")
     ws.cell(row=fila, column=11, value="25")
 
@@ -70,7 +67,7 @@ def test_excel_ignora_rotulos_administrativos_y_totales_en_columna_j(tmp_path):
     assert registros[0].nivel_original == "25"
 
 
-def test_excel_ignora_variantes_de_formato_de_rotulos(tmp_path):
+def test_excel_ignora_variantes_y_texto_adicional_de_rotulos(tmp_path):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Puestos"
@@ -78,20 +75,28 @@ def test_excel_ignora_variantes_de_formato_de_rotulos(tmp_path):
     ws["K1"] = "NIVEL"
 
     variantes = [
-        "  integró  ",
-        "TITULAR DE UNIDAD ADMINISTRATIVA",
-        "variacion en costo",
-        "NO PLAZAS ACTUAL",
-        "Variación   en   plazas",
+        "  integró: Juan Pérez  ",
+        "TITULAR DE UNIDAD ADMINISTRATIVA - DIRECCIÓN X",
+        "Titular del area de administracion: María López",
+        "TOTAL 125",
+        "TOTAL ACTUAL: 50",
+        "variacion en costo $123.00",
+        "NO PLAZAS ACTUAL 30",
+        "Variación   en   plazas: 2",
     ]
 
     for idx, valor in enumerate(variantes, start=2):
         ws.cell(row=idx, column=10, value=valor)
         ws.cell(row=idx, column=11, value="20")
 
+    fila_real = len(variantes) + 2
+    ws.cell(row=fila_real, column=10, value="Dirección de Administración")
+    ws.cell(row=fila_real, column=11, value="40")
+
     ruta = tmp_path / "excel_variantes_totales.xlsx"
     wb.save(ruta)
 
     registros = extraer_excel(str(ruta))
 
-    assert registros == []
+    assert len(registros) == 1
+    assert registros[0].puesto_original == "Dirección de Administración"
