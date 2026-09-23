@@ -12,7 +12,10 @@ from models.models import PuestoRecord, Fuente, Ubicacion, TipoInconsistencia  #
 from normalization.normalizer import normalizar_puesto, normalizar_nivel  # noqa: E402
 from comparison.comparator import comparar_fuentes  # noqa: E402
 from comparison.catalogo_niveles import enriquecer_con_catalogo  # noqa: E402
-from pipeline import ejecutar_analisis, exportar_reporte, ModoAnalisis  # noqa: E402
+from pipeline import (  # noqa: E402
+    ejecutar_analisis, exportar_reporte, ModoAnalisis,
+    _filtrar_rotulos_administrativos,
+)
 from reports.excel_report import _encabezados  # noqa: E402
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -29,6 +32,33 @@ def _rec(fuente, puesto, nivel):
     )
     enriquecer_con_catalogo(r)
     return r
+
+
+def test_filtro_administrativo_aplica_a_todas_las_fuentes():
+    textos_ruido = [
+        "TOTAL",
+        "TOTAL ACTUAL 10",
+        "INTEGRÓ: Juan Pérez",
+        "TITULAR DEL ÁREA DE ADMINISTRACIÓN: María López",
+        "TITULAR DE UNIDAD ADMINISTRATIVA",
+        "VARIACIÓN EN COSTO $123.00",
+        "NO. PLAZAS ACTUAL 35",
+        "NO. PLAZAS PROPUESTA 40",
+        "VARIACIÓN EN PLAZAS 5",
+    ]
+    for fuente in (Fuente.EXCEL, Fuente.WORD, Fuente.ORGANIGRAMA):
+        records = [_rec(fuente, texto, "25") for texto in textos_ruido]
+        assert _filtrar_rotulos_administrativos(records) == []
+
+
+def test_filtro_administrativo_conserva_puestos_reales():
+    reales = [
+        _rec(Fuente.EXCEL, "Dirección de Administración", "40"),
+        _rec(Fuente.WORD, "Jefatura de Unidad Departamental de Recursos Humanos", "25"),
+        _rec(Fuente.ORGANIGRAMA, "L.C.P. de Planeación", "24"),
+    ]
+    filtrados = _filtrar_rotulos_administrativos(reales)
+    assert [r.puesto_original for r in filtrados] == [r.puesto_original for r in reales]
 
 
 # ---------------------------------------------------------------------------
@@ -50,17 +80,12 @@ def test_modo_completo_sigue_reportando_falta_en_word_normalmente():
     excel = [_rec(Fuente.EXCEL, "Jefe de Recursos Humanos", "25")]
     org = [_rec(Fuente.ORGANIGRAMA, "Jefe de Recursos Humanos", "25")]
 
-    # incluir_word=True (por defecto) y Word realmente vacío -> sí debe
-    # reportarse como faltante en Word (a diferencia del caso anterior).
     resultados = comparar_fuentes(excel, [], org, incluir_word=True)
     r = resultados[0]
     assert r.tipo_inconsistencia == TipoInconsistencia.PUESTO_FALTANTE
     assert "Word" in r.detalle
 
 
-# ---------------------------------------------------------------------------
-# Extremo a extremo con el pipeline completo (archivos reales de fixtures).
-# ---------------------------------------------------------------------------
 def test_pipeline_modo_excel_organigrama_no_requiere_word():
     resultado = ejecutar_analisis(
         ruta_excel=RUTA_EXCEL, ruta_organigrama_pdf=RUTA_ORG, ruta_word=None,
@@ -69,7 +94,6 @@ def test_pipeline_modo_excel_organigrama_no_requiere_word():
     assert resultado["errores_fatales"] == []
     assert resultado["word_records"] == []
     assert resultado["modo"] == ModoAnalisis.EXCEL_ORGANIGRAMA
-    # ningún resultado debe traer información de Word
     assert all(r.word is None for r in resultado["resultados"])
 
 
@@ -119,10 +143,6 @@ def test_reporte_modo_completo_si_incluye_columnas_de_word(tmp_path):
     assert any("Word" in str(e) for e in encabezados)
 
 
-# ---------------------------------------------------------------------------
-# §7: ninguna columna de ubicación técnica debe aparecer en el reporte,
-# sin importar el modo.
-# ---------------------------------------------------------------------------
 def test_reporte_nunca_incluye_columnas_de_ubicacion():
     palabras_prohibidas = ["página", "pagina", "fila", "columna", "celda", "tabla", "coordenada", "ubicación", "ubicacion", "ruta"]
     for modo in (ModoAnalisis.COMPLETO, ModoAnalisis.EXCEL_ORGANIGRAMA):
@@ -132,12 +152,10 @@ def test_reporte_nunca_incluye_columnas_de_ubicacion():
 
 
 def test_jud_lcp_siguen_normalizando_en_ambos_modos():
-    # §9 del pedido: la normalización de abreviaturas debe funcionar igual
-    # sin importar el modo de análisis.
     excel = [_rec(Fuente.EXCEL, "Líder Coordinador de Proyectos de Planeación", "23")]
     org = [_rec(Fuente.ORGANIGRAMA, "L.C.P. de Planeación", "24")]
     resultados = comparar_fuentes(excel, [], org, incluir_word=False)
     r = resultados[0]
     assert r.organigrama is not None
-    assert r.tipo_inconsistencia == TipoInconsistencia.NIVEL_INCONSISTENTE  # mismo puesto, nivel distinto (23 vs 24)
+    assert r.tipo_inconsistencia == TipoInconsistencia.NIVEL_INCONSISTENTE
     assert "LCP" in r.equivalencia_aplicada
