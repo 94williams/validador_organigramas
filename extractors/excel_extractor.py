@@ -26,28 +26,37 @@ from utils.logger import get_logger  # noqa: E402
 logger = get_logger("excel_extractor")
 
 
-# Valores administrativos/de resumen que pueden aparecer en la columna de
-# puesto (por ejemplo, la columna J) pero no representan un puesto real.
-# Se guardan ya normalizados para que el filtro tolere mayúsculas, acentos,
-# puntos y espacios extra sin afectar puestos legítimos.
-_EXCEL_PUESTOS_IGNORADOS = {
-    normalizar_puesto("INTEGRÓ"),
-    normalizar_puesto("TITULAR DE UNIDAD ADMINISTRATIVA"),
-    normalizar_puesto("TOTAL"),
-    normalizar_puesto("TOTAL ACTUAL"),
-    normalizar_puesto("TOTAL PROPUESTO"),
-    normalizar_puesto("VARIACIÓN EN COSTO"),
-    normalizar_puesto("NO. PLAZAS ACTUAL"),
-    normalizar_puesto("NO. PLAZAS PROPUESTA"),
-    normalizar_puesto("VARIACIÓN EN PLAZAS"),
-}
+# Rótulos administrativos/de resumen que pueden aparecer en la columna de
+# puesto (por ejemplo J) pero no representan puestos reales. Se comparan como
+# prefijos después de normalizar para cubrir casos como "INTEGRÓ: Juan Pérez",
+# "TOTAL 25" o "TITULAR DEL ÁREA DE ADMINISTRACIÓN: ...".
+_EXCEL_PREFIJOS_IGNORADOS = tuple(
+    normalizar_puesto(valor)
+    for valor in (
+        "INTEGRÓ",
+        "TITULAR DE UNIDAD ADMINISTRATIVA",
+        "TITULAR DEL ÁREA DE ADMINISTRACIÓN",
+        "TOTAL",
+        "TOTAL ACTUAL",
+        "TOTAL PROPUESTO",
+        "VARIACIÓN EN COSTO",
+        "NO. PLAZAS ACTUAL",
+        "NO. PLAZAS PROPUESTA",
+        "VARIACIÓN EN PLAZAS",
+    )
+)
 
 
 def _es_fila_ignorada_excel(valor) -> bool:
-    """True cuando la celda contiene un rótulo administrativo/resumen."""
+    """True cuando la celda comienza con un rótulo administrativo/resumen."""
     if valor is None:
         return False
-    return normalizar_puesto(str(valor)) in _EXCEL_PUESTOS_IGNORADOS
+
+    normalizado = normalizar_puesto(str(valor))
+    if not normalizado:
+        return False
+
+    return any(normalizado.startswith(prefijo) for prefijo in _EXCEL_PREFIJOS_IGNORADOS)
 
 
 def _texto_encabezado_coincide(valor, candidatos: List[str]) -> bool:
