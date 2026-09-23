@@ -12,7 +12,6 @@ Esto permite agregar modos futuros (ej. "Word vs Organigrama") sin duplicar
 ninguna lógica: basta con decidir qué extractores llamar.
 """
 import os
-import re
 import traceback
 from enum import Enum
 from typing import List, Optional
@@ -24,7 +23,6 @@ from comparison.comparator import comparar_fuentes, aplicar_segunda_opinion_olla
 from comparison.catalogo_niveles import enriquecer_con_catalogo
 from reports.excel_report import generar_reporte
 from models.models import PuestoRecord, Fuente, Ubicacion
-from normalization.normalizer import normalizar_puesto
 from utils.logger import get_logger
 
 logger = get_logger("pipeline")
@@ -33,47 +31,6 @@ logger = get_logger("pipeline")
 class ModoAnalisis(str, Enum):
     COMPLETO = "completo"                  # Excel + Word + Organigrama
     EXCEL_ORGANIGRAMA = "excel_organigrama"  # Excel + Organigrama (Word no participa)
-
-
-# Rótulos administrativos que no representan puestos reales. Se filtran en
-# el pipeline DESPUÉS de extraer cada fuente y ANTES de comparar, para evitar
-# que reaparezcan como "Puesto adicional" cuando vienen de Word u Organigrama.
-_PATRONES_ROTULOS_ADMINISTRATIVOS = [
-    r"^integro(?:\b|\s)",
-    r"^titular de unidad administrativa(?:\b|\s)",
-    r"^titular del area de administracion(?:\b|\s)",
-    r"^total(?:\b|\s)",
-    r"^variacion en costo(?:\b|\s)",
-    r"^no plazas actual(?:\b|\s)",
-    r"^no plazas propuesta(?:\b|\s)",
-    r"^variacion en plazas(?:\b|\s)",
-]
-
-
-def _es_rotulo_administrativo(puesto_original: str) -> bool:
-    """Indica si el texto es un rótulo/resumen y no un puesto real."""
-    normalizado = normalizar_puesto(puesto_original or "")
-    if not normalizado:
-        return False
-    return any(re.search(patron, normalizado) for patron in _PATRONES_ROTULOS_ADMINISTRATIVOS)
-
-
-def _filtrar_rotulos_administrativos(records: List[PuestoRecord]) -> List[PuestoRecord]:
-    """Elimina rótulos administrativos válidamente extraídos de cualquier fuente."""
-    filtrados = []
-    for record in records:
-        # Los registros de error se conservan para no ocultar fallos reales.
-        if record.error:
-            filtrados.append(record)
-            continue
-        if _es_rotulo_administrativo(record.puesto_original):
-            logger.debug(
-                f"{record.fuente.value}: rótulo administrativo ignorado antes de comparar: "
-                f"{record.puesto_original!r}"
-            )
-            continue
-        filtrados.append(record)
-    return filtrados
 
 
 def _registro_error_fatal(fuente: Fuente, archivo: str, mensaje: str) -> PuestoRecord:
@@ -129,13 +86,6 @@ def ejecutar_analisis(
         logger.error(f"Fallo fatal extrayendo organigrama: {e}\n{traceback.format_exc()}")
         errores_fatales.append(f"Organigrama: {e}")
         organigrama_records = [_registro_error_fatal(Fuente.ORGANIGRAMA, ruta_organigrama_pdf, str(e))]
-
-    # Limpieza común: un rótulo administrativo puede ser leído por Excel,
-    # Word o por el PDF del organigrama. Si no se filtra aquí, una fuente
-    # secundaria puede reintroducirlo como "Puesto adicional" en el reporte.
-    excel_records = _filtrar_rotulos_administrativos(excel_records)
-    word_records = _filtrar_rotulos_administrativos(word_records)
-    organigrama_records = _filtrar_rotulos_administrativos(organigrama_records)
 
     # Enriquecer cada registro con tipo de puesto / nombre específico /
     # estado de nivel según el catálogo oficial (config.py), ANTES de
