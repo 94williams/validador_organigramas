@@ -57,7 +57,7 @@ _ENCABEZADOS_FIN = [
     "Organigrama - Original", "Organigrama - Nivel", "Organigrama - Estado de nivel",
     "Resultado", "Tipo de inconsistencia", "Nivel de coincidencia de nombre", "Método de coincidencia",
     "Confianza (%)", "Motivo", "Equivalencia institucional aplicada",
-    "Advertencia de catálogo (informativa)",
+    "Advertencia de catálogo (informativa)", "Advertencia de formato (mayúsculas)",
 ]
 
 
@@ -108,6 +108,7 @@ def _fila_desde_resultado(r: ComparisonResult, modo) -> list:
         r.detalle,
         r.equivalencia_aplicada,
         r.advertencia_catalogo,
+        r.advertencia_formato,
     ]
     return fila
 

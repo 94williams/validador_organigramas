@@ -25,6 +25,8 @@ import sys
 from collections import defaultdict
 from typing import Dict, List, Optional
 
+from rapidfuzz import fuzz
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config  # noqa: E402
 from models.models import (  # noqa: E402
@@ -142,6 +144,27 @@ def _resultado_desde_error(record: PuestoRecord) -> ComparisonResult:
     return r
 
 
+def _advertencia_mayusculas(record: PuestoRecord) -> str:
+    if record.puesto_original != record.puesto_original.upper():
+        return f"{record.fuente.value}: el puesto debe escribirse completamente en mayúsculas."
+    return ""
+
+
+def _ajustar_confianza_por_texto_original(confianza: float, registros: List[PuestoRecord]) -> float:
+    """Limita la confianza por la similitud literal entre nombres emparejados."""
+    if len(registros) < 2:
+        return 0.0
+
+    similitudes = [
+        fuzz.ratio(registros[i].puesto_original, registros[j].puesto_original)
+        for i in range(len(registros))
+        for j in range(i + 1, len(registros))
+    ]
+    if similitudes:
+        confianza = min(confianza, *similitudes)
+    return round(confianza, 1)
+
+
 def _metodo_desde_nivel_comparacion(nivel: NivelComparacion) -> MetodoCoincidencia:
     """Traduce el nivel de comparación de nombre (matching) al método de
     coincidencia legible para auditoría (§41 del prompt maestro)."""
@@ -178,6 +201,9 @@ def _construir_resultado(
     # tiene sentido reportar "falta en Word" cuando Word nunca se analizó.
     fuentes_relevantes = [excel_rec, org_rec] + ([word_rec] if incluir_word else [])
     fuentes_presentes = [f for f in fuentes_relevantes if f is not None]
+    resultado.confianza_match = _ajustar_confianza_por_texto_original(
+        resultado.confianza_match, fuentes_presentes,
+    )
     faltantes = []
     if excel_rec is None:
         faltantes.append("Excel")
@@ -245,7 +271,11 @@ def _construir_resultado(
     # que "heredan" una palabra de la jerarquía, ver catalogo_niveles.py);
     # se reporta aparte para que el usuario lo revise si quiere.
     advertencias = []
+    advertencias_formato = []
     for f in fuentes_presentes:
+        aviso_formato = _advertencia_mayusculas(f)
+        if aviso_formato:
+            advertencias_formato.append(aviso_formato)
         aviso = validar_nivel_catalogo(f.puesto_normalizado, f.nivel_normalizado)
         if aviso:
             advertencias.append(f"{f.fuente.value}: {aviso}")
@@ -253,6 +283,7 @@ def _construir_resultado(
         if aviso_abrev:
             advertencias.append(f"{f.fuente.value}: {aviso_abrev}")
     resultado.advertencia_catalogo = " ".join(advertencias)
+    resultado.advertencia_formato = " ".join(advertencias_formato)
 
     return resultado
 
@@ -276,6 +307,8 @@ def _marcar_duplicados(grupos: Dict[str, List[PuestoRecord]], resultados: List[C
                 detalle=f"Puesto duplicado {len(registros)} veces dentro de {fuente.value}. Ubicaciones: {ubicaciones}",
             )
             setattr(res, {"Excel": "excel", "Word": "word", "Organigrama": "organigrama"}[fuente.value], r)
+            res.advertencia_formato = _advertencia_mayusculas(r)
+            res.confianza_match = _ajustar_confianza_por_texto_original(100.0, registros)
             duplicados_resultados.append(res)
     resultados.extend(duplicados_resultados)
 
@@ -474,7 +507,10 @@ def aplicar_segunda_opinion_ollama(resultados: List[ComparisonResult]) -> List[C
         ):
             r.tipo_inconsistencia = TipoInconsistencia.COINCIDE_IA
             r.metodo_coincidencia = MetodoCoincidencia.IA
-            r.confianza_match = round(respuesta["confianza"] * 100, 1)
+            r.confianza_match = _ajustar_confianza_por_texto_original(
+                round(respuesta["confianza"] * 100, 1),
+                [f for f in (r.excel, r.word, r.organigrama) if f is not None],
+            )
             r.detalle = f"Confirmado por IA (Ollama): {respuesta['explicacion']}"
         # si Ollama dice que no, o no tiene suficiente confianza, el
         # resultado se queda tal cual (Requiere revisión / revisión manual)

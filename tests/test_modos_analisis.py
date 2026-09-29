@@ -13,7 +13,7 @@ from normalization.normalizer import normalizar_puesto, normalizar_nivel  # noqa
 from comparison.comparator import comparar_fuentes  # noqa: E402
 from comparison.catalogo_niveles import enriquecer_con_catalogo  # noqa: E402
 from pipeline import ejecutar_analisis, exportar_reporte, ModoAnalisis  # noqa: E402
-from reports.excel_report import _encabezados  # noqa: E402
+from reports.excel_report import _encabezados, _fila_desde_resultado  # noqa: E402
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 RUTA_EXCEL = os.path.join(FIXTURES, "referencia.xlsx")
@@ -56,6 +56,20 @@ def test_modo_completo_sigue_reportando_falta_en_word_normalmente():
     r = resultados[0]
     assert r.tipo_inconsistencia == TipoInconsistencia.PUESTO_FALTANTE
     assert "Word" in r.detalle
+
+
+def test_reporte_muestra_advertencia_de_mayusculas_por_fuente():
+    excel = [_rec(Fuente.EXCEL, "j.u.d. de recursos humanos", "25")]
+    word = [_rec(Fuente.WORD, "J.U.D. DE RECURSOS HUMANOS", "25")]
+    org = [_rec(Fuente.ORGANIGRAMA, "J.U.D. DE RECURSOS HUMANOS", "25")]
+    resultado = comparar_fuentes(excel, word, org)[0]
+
+    encabezados = _encabezados(ModoAnalisis.COMPLETO)
+    fila = _fila_desde_resultado(resultado, ModoAnalisis.COMPLETO)
+
+    assert fila[encabezados.index("Advertencia de formato (mayúsculas)")] == (
+        "Excel: el puesto debe escribirse completamente en mayúsculas."
+    )
 
 
 # ---------------------------------------------------------------------------

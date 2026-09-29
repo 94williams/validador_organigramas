@@ -148,6 +148,7 @@ class ComparisonResult:
     es_duplicado: bool = False
     ids_relacionados: list = field(default_factory=list)  # para agrupar duplicados
     advertencia_catalogo: str = ""  # validación informativa contra catálogo oficial de niveles
+    advertencia_formato: str = ""  # validación informativa del uso de mayúsculas en los puestos
     equivalencia_aplicada: str = ""  # ej. "J.U.D. → jefatura de unidad departamental"
     puesto_canonico: str = ""  # clave de comparación con abreviaturas expandidas
     metodo_coincidencia: "MetodoCoincidencia" = None  # cómo se determinó la coincidencia (auditoría, §41)

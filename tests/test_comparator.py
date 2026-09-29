@@ -1,6 +1,8 @@
 import os
 import sys
 
+from rapidfuzz import fuzz
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from models.models import PuestoRecord, Fuente, Ubicacion, TipoInconsistencia
 from normalization.normalizer import normalizar_puesto, normalizar_nivel
@@ -32,6 +34,44 @@ def test_diferencia_acento_y_mayusculas_coincide_normalizado():
     org = [_rec(Fuente.ORGANIGRAMA, "director de area", "Nivel 8")]
     resultados = comparar_fuentes(excel, word, org)
     assert any(r.tipo_inconsistencia == TipoInconsistencia.COINCIDE_NORMALIZADO for r in resultados)
+
+
+def test_confianza_100_solo_cuando_los_nombres_originales_coinciden():
+    puesto = "J.U.D. DE RECURSOS HUMANOS"
+    nombre_en_minusculas = puesto.lower()
+    exactos = comparar_fuentes(
+        [_rec(Fuente.EXCEL, puesto, "Nivel 25")],
+        [_rec(Fuente.WORD, puesto, "Nivel 25")],
+        [_rec(Fuente.ORGANIGRAMA, puesto, "Nivel 25")],
+    )[0]
+    con_diferencia_de_mayusculas = comparar_fuentes(
+        [_rec(Fuente.EXCEL, nombre_en_minusculas, "Nivel 25")],
+        [_rec(Fuente.WORD, puesto, "Nivel 25")],
+        [_rec(Fuente.ORGANIGRAMA, puesto, "Nivel 25")],
+    )[0]
+
+    assert exactos.confianza_match == 100.0
+    assert con_diferencia_de_mayusculas.confianza_match == round(
+        fuzz.ratio(nombre_en_minusculas, puesto), 1,
+    )
+
+    sin_contraparte = comparar_fuentes(
+        [_rec(Fuente.EXCEL, puesto, "Nivel 25")], [], [],
+    )[0]
+    assert sin_contraparte.confianza_match == 0.0
+
+
+def test_puestos_deben_estar_en_mayusculas_sin_alterar_la_coincidencia():
+    excel = [_rec(Fuente.EXCEL, "l.c.p. de planeación", "Nivel 24")]
+    word = [_rec(Fuente.WORD, "L.C.P. DE PLANEACIÓN", "Nivel 24")]
+    org = [_rec(Fuente.ORGANIGRAMA, "L.C.P. DE PLANEACIÓN", "Nivel 24")]
+
+    resultado = comparar_fuentes(excel, word, org)[0]
+
+    assert resultado.tipo_inconsistencia == TipoInconsistencia.COINCIDE_NORMALIZADO
+    assert "Excel" in resultado.advertencia_formato
+    assert "Word" not in resultado.advertencia_formato
+    assert "Organigrama" not in resultado.advertencia_formato
 
 
 def test_nivel_inconsistente():
