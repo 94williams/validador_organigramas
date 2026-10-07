@@ -19,7 +19,7 @@ from typing import List, Optional
 from extractors.excel_extractor import extraer_excel
 from extractors.word_extractor import extraer_word
 from extractors.organigrama_extractor import extraer_organigrama
-from comparison.comparator import comparar_fuentes, aplicar_segunda_opinion_ollama
+from comparison.comparator import comparar_fuentes
 from comparison.catalogo_niveles import enriquecer_con_catalogo
 from reports.excel_report import generar_reporte
 from models.models import PuestoRecord, Fuente, Ubicacion
@@ -97,7 +97,6 @@ def ejecutar_analisis(
 
     try:
         resultados = comparar_fuentes(excel_records, word_records, organigrama_records, incluir_word=usar_word)
-        resultados = aplicar_segunda_opinion_ollama(resultados)
     except Exception as e:
         logger.error(f"Fallo fatal en la comparación: {e}\n{traceback.format_exc()}")
         errores_fatales.append(f"Comparación: {e}")

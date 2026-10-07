@@ -218,20 +218,6 @@ EXCEPCIONES_CATALOGO_NIVELES = [
 ]
 
 # ---------------------------------------------------------------------------
-# OLLAMA (segunda opinión semántica para casos ambiguos, §29-42)
-# ---------------------------------------------------------------------------
-# Deshabilitado por defecto: el programa debe funcionar completo sin Ollama.
-# Solo se consulta cuando el matching determinista deja un caso en la banda
-# "Requiere revisión" (ver comparison/matcher.py) — nunca reemplaza al
-# catálogo, la extracción, ni la comparación determinista.
-OLLAMA_ENABLED = False
-OLLAMA_HOST = "http://localhost:11434"
-OLLAMA_MODEL = "qwen2.5:7b-instruct"
-OLLAMA_TIMEOUT_SEGUNDOS = 20
-OLLAMA_CONFIANZA_MINIMA_PARA_ACEPTAR = 0.90  # por debajo de esto, sigue en revisión manual aunque Ollama opine "sí"
-OLLAMA_CACHE_ARCHIVO = "logs/cache_ollama.json"  # se persiste entre ejecuciones
-
-# ---------------------------------------------------------------------------
 # ACCESO A LA INTERFAZ (local / red local / remoto)
 # ---------------------------------------------------------------------------
 # Contraseña opcional para la interfaz Streamlit. None (por defecto) = sin

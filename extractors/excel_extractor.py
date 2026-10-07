@@ -117,6 +117,14 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
         ))
         return registros
 
+    if hoja and hoja not in wb.sheetnames:
+        disponibles = ", ".join(wb.sheetnames)
+        wb.close()
+        raise ValueError(
+            f"La hoja '{hoja}' no existe. Hojas disponibles: {disponibles}. "
+            "Análisis incompleto: corrige el nombre de la hoja y vuelve a analizar."
+        )
+
     hojas = [hoja] if hoja else wb.sheetnames
 
     for nombre_hoja in hojas:
@@ -185,5 +193,6 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
                 confianza_extraccion=1.0,
             ))
 
+    wb.close()
     logger.info(f"Excel '{nombre_archivo}': {len(registros)} registro(s) extraído(s).")
     return registros

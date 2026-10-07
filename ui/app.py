@@ -16,15 +16,15 @@ Flujo:
 """
 import os
 import sys
-import tempfile
 
 import pandas as pd
 import streamlit as st
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from pipeline import ejecutar_analisis, exportar_reporte, ModoAnalisis  # noqa: E402
+from pipeline import ModoAnalisis  # noqa: E402
 from models.models import TipoInconsistencia  # noqa: E402
 from reports.excel_report import _fila_desde_resultado, _encabezados  # noqa: E402
+from ui.analysis_service import analizar_archivos, contar_puestos  # noqa: E402
 import config  # noqa: E402
 
 st.set_page_config(page_title="Validador de Organigramas", layout="wide")
@@ -64,31 +64,8 @@ st.caption(
 
 if "resultado_analisis" not in st.session_state:
     st.session_state.resultado_analisis = None
-if "ruta_reporte" not in st.session_state:
-    st.session_state.ruta_reporte = None
-if "archivos_temporales" not in st.session_state:
-    st.session_state.archivos_temporales = []
-
-
-def _guardar_temporal(archivo_subido) -> str:
-    """Guarda un archivo subido por Streamlit en un temporal y regresa la ruta."""
-    sufijo = os.path.splitext(archivo_subido.name)[1]
-    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=sufijo)
-    tmp.write(archivo_subido.getbuffer())
-    tmp.close()
-    st.session_state.archivos_temporales.append(tmp.name)
-    return tmp.name
-
-
-def _limpiar_temporales():
-    """Borra los archivos temporales de la ejecución anterior (§18: no dejar copias innecesarias)."""
-    for ruta in st.session_state.archivos_temporales:
-        try:
-            if os.path.exists(ruta):
-                os.remove(ruta)
-        except OSError:
-            pass
-    st.session_state.archivos_temporales = []
+if "reporte_bytes" not in st.session_state:
+    st.session_state.reporte_bytes = None
 
 
 with st.sidebar:
@@ -122,28 +99,19 @@ if analizar:
         faltan = "Excel, Organigrama" + (" y Word" if modo == ModoAnalisis.COMPLETO else "")
         st.error(f"Debes cargar: {faltan}.")
     else:
-        _limpiar_temporales()
+        st.session_state.resultado_analisis = None
+        st.session_state.reporte_bytes = None
         with st.spinner("Extrayendo y comparando información..."):
-            ruta_excel = _guardar_temporal(archivo_excel)
-            ruta_organigrama = _guardar_temporal(archivo_organigrama)
-            ruta_word = _guardar_temporal(archivo_word) if archivo_word else None
-
-            resultado = ejecutar_analisis(
-                ruta_excel=ruta_excel,
-                ruta_organigrama_pdf=ruta_organigrama,
-                ruta_word=ruta_word,
-                hoja_excel=hoja_excel.strip() or None,
-                modo=modo,
-            )
-            st.session_state.resultado_analisis = resultado
-
-            ruta_salida = os.path.join(tempfile.gettempdir(), "reporte_inconsistencias.xlsx")
-            exportar_reporte(
-                resultado["resultados"], ruta_salida,
-                resultado["excel_records"], resultado["word_records"], resultado["organigrama_records"],
-                modo=modo,
-            )
-            st.session_state.ruta_reporte = ruta_salida
+            try:
+                resultado, reporte = analizar_archivos(
+                    archivo_excel, archivo_organigrama, archivo_word,
+                    hoja_excel.strip() or None, modo,
+                )
+            except Exception as exc:
+                st.error(f"No se pudo completar el análisis o generar el reporte: {exc}")
+            else:
+                st.session_state.resultado_analisis = resultado
+                st.session_state.reporte_bytes = reporte
 
 resultado = st.session_state.resultado_analisis
 
@@ -154,7 +122,7 @@ else:
     incluye_word = modo_actual == ModoAnalisis.COMPLETO
 
     if resultado["errores_fatales"]:
-        st.error("Ocurrieron errores al procesar algunas fuentes:")
+        st.error("Análisis incompleto: los resultados pueden contener faltantes o adicionales derivados de errores de lectura.")
         for err in resultado["errores_fatales"]:
             st.write(f"- {err}")
 
@@ -163,13 +131,13 @@ else:
     st.header("2. Resumen")
     st.caption(f"Modo: {'Excel + Word + Organigrama' if incluye_word else 'Excel vs Organigrama (Word no participó)'}")
 
-    columnas_resumen = st.columns(3 if incluye_word else 2)
-    columnas_resumen[0].metric("Puestos en Excel", sum(1 for r in resultados if r.excel is not None))
-    if incluye_word:
-        columnas_resumen[1].metric("Puestos en Word", sum(1 for r in resultados if r.word is not None))
-        columnas_resumen[2].metric("Puestos en Organigrama", sum(1 for r in resultados if r.organigrama is not None))
-    else:
-        columnas_resumen[1].metric("Puestos en Organigrama", sum(1 for r in resultados if r.organigrama is not None))
+    fuentes = [("Excel", "excel_records"), ("Word", "word_records"), ("Organigrama", "organigrama_records")]
+    if not incluye_word:
+        fuentes = [f for f in fuentes if f[0] != "Word"]
+    for columna, (nombre, clave) in zip(st.columns(len(fuentes)), fuentes):
+        total, unicos = contar_puestos(resultado[clave])
+        columna.metric(f"Puestos en {nombre}", total)
+        columna.caption(f"{unicos} puestos únicos; {total} registros válidos.")
 
     ok_count = sum(1 for r in resultados if r.tipo_inconsistencia == TipoInconsistencia.OK)
     revisar_count = len(resultados) - ok_count
@@ -192,18 +160,17 @@ else:
     busqueda = st.text_input("Buscar puesto")
     if busqueda:
         df_filtrado = df_filtrado[
-            df_filtrado["Puesto (clave normalizada)"].str.contains(busqueda, case=False, na=False)
+            df_filtrado["Puesto (clave normalizada)"].str.contains(busqueda, case=False, na=False, regex=False)
         ]
 
     st.dataframe(df_filtrado, use_container_width=True, height=500)
 
     st.header("4. Exportar")
-    if st.session_state.ruta_reporte and os.path.exists(st.session_state.ruta_reporte):
-        with open(st.session_state.ruta_reporte, "rb") as f:
-            st.download_button(
-                "⬇️ Descargar Excel de resultados",
-                data=f.read(),
-                file_name="reporte_inconsistencias.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                type="primary",
-            )
+    if st.session_state.reporte_bytes is not None:
+        st.download_button(
+            "⬇️ Descargar Excel de resultados",
+            data=st.session_state.reporte_bytes,
+            file_name="reporte_inconsistencias.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            type="primary",
+        )

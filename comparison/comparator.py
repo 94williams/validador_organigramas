@@ -34,7 +34,6 @@ from models.models import (  # noqa: E402
 )
 from comparison.matcher import evaluar_similitud_con_reglas, evaluar_coincidencia_por_componentes, comparar_niveles  # noqa: E402
 from comparison.catalogo_niveles import validar_nivel_catalogo  # noqa: E402
-from comparison.ollama_client import consultar_ollama  # noqa: E402
 from normalization.normalizer import normalizar_para_comparacion, detectar_abreviaturas_en_texto, detectar_posible_abreviatura_no_reconocida  # noqa: E402
 from utils.logger import get_logger  # noqa: E402
 
@@ -254,7 +253,7 @@ def _construir_resultado(
         if len(valores_unicos) > 1:
             resultado.tipo_inconsistencia = TipoInconsistencia.NIVEL_INCONSISTENTE
             detalle_niveles = ", ".join(f"{k}={v or 'N/D'}" for k, v in niveles_normalizados.items())
-            resultado.detalle = f"Nivel distinto entre fuentes ({detalle_niveles})."
+            resultado.detalle = f"Nivel distinto entre fuentes ({detalle_niveles})." + nota_faltantes
         elif hay_vacios and resultado.tipo_inconsistencia == TipoInconsistencia.OK:
             resultado.tipo_inconsistencia = TipoInconsistencia.NIVEL_FALTANTE
             fuentes_sin_nivel = [k for k, v in niveles_normalizados.items() if not v]
@@ -460,59 +459,4 @@ def comparar_fuentes(
         resultados.append(resultado)
 
     logger.info(f"Comparación finalizada: {len(resultados)} resultado(s) generado(s).")
-    return resultados
-
-
-def aplicar_segunda_opinion_ollama(resultados: List[ComparisonResult]) -> List[ComparisonResult]:
-    """
-    Paso OPCIONAL de post-procesamiento (§29-42): para cada resultado que
-    quedó en "Requiere revisión" tras el matching determinista, consulta a
-    Ollama como segunda opinión semántica. Si config.OLLAMA_ENABLED es
-    False (por defecto), esta función no hace nada y regresa los
-    resultados sin cambios — el resto del sistema no depende de esto.
-
-    Ollama NUNCA determina el nivel ni sustituye al catálogo: solo puede
-    mover un caso de "Requiere revisión" a "Coincidencia resuelta por IA"
-    cuando responde con alta confianza que sí es el mismo puesto, o
-    dejarlo igual (revisión manual) en cualquier otro caso — nunca lo
-    marca como coincidencia si la evidencia no es suficiente.
-    """
-    if not config.OLLAMA_ENABLED:
-        return resultados
-
-    for r in resultados:
-        if r.tipo_inconsistencia != TipoInconsistencia.REQUIERE_REVISION:
-            continue
-
-        registros_presentes = [f for f in (r.excel, r.word, r.organigrama) if f is not None]
-        if len(registros_presentes) < 2:
-            continue
-        base = registros_presentes[0]
-        otro = registros_presentes[1]
-
-        respuesta = consultar_ollama(
-            base.puesto_original, otro.puesto_original,
-            base.tipo_puesto, base.niveles_catalogo,
-        )
-        if respuesta is None:
-            continue  # Ollama no disponible o respuesta inválida -> se queda en revisión manual
-
-        r.ia_consultada = True
-        r.ia_explicacion = respuesta.get("explicacion", "")
-
-        if (
-            respuesta["es_mismo_puesto"]
-            and not respuesta["requiere_revision_humana"]
-            and respuesta["confianza"] >= config.OLLAMA_CONFIANZA_MINIMA_PARA_ACEPTAR
-        ):
-            r.tipo_inconsistencia = TipoInconsistencia.COINCIDE_IA
-            r.metodo_coincidencia = MetodoCoincidencia.IA
-            r.confianza_match = _ajustar_confianza_por_texto_original(
-                round(respuesta["confianza"] * 100, 1),
-                [f for f in (r.excel, r.word, r.organigrama) if f is not None],
-            )
-            r.detalle = f"Confirmado por IA (Ollama): {respuesta['explicacion']}"
-        # si Ollama dice que no, o no tiene suficiente confianza, el
-        # resultado se queda tal cual (Requiere revisión / revisión manual)
-
     return resultados

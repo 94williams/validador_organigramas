@@ -15,6 +15,7 @@ depuración (logs, `Ubicacion.resumen()`), pero no es parte del entregable.
 import os
 import sys
 from collections import Counter
+from io import BytesIO
 from typing import List, Optional
 
 from openpyxl import Workbook
@@ -34,7 +35,6 @@ COLOR_POR_TIPO = {
     TipoInconsistencia.DIFERENCIA_FORMATO: "D9E1F2",
     TipoInconsistencia.POSIBLE_COINCIDENCIA: "FFEB9C",        # amarillo
     TipoInconsistencia.REQUIERE_REVISION: "FFEB9C",
-    TipoInconsistencia.COINCIDE_IA: "C9C1F5",                 # lila (resuelto por IA)
     TipoInconsistencia.NIVEL_INCONSISTENTE: "FFC7CE",         # rojo claro
     TipoInconsistencia.NIVEL_FALTANTE: "FFD966",              # naranja
     TipoInconsistencia.NIVEL_FORMATO_INVALIDO: "FFD966",
@@ -158,10 +158,9 @@ def _escribir_hoja_resumen(wb: Workbook, resultados: List[ComparisonResult], mod
 
     total_excel = sum(1 for r in principales if r.excel is not None)
     total_org = sum(1 for r in principales if r.organigrama is not None)
-    faltantes_org = sum(1 for r in principales if r.excel and not r.organigrama and r.tipo_inconsistencia == TipoInconsistencia.PUESTO_FALTANTE)
+    faltantes_org = sum(1 for r in principales if r.excel and not r.organigrama)
     posibles_coincidencias = sum(1 for r in principales if r.tipo_inconsistencia == TipoInconsistencia.POSIBLE_COINCIDENCIA)
     equivalencias_institucionales = sum(1 for r in principales if r.tipo_inconsistencia == TipoInconsistencia.COINCIDE_EQUIVALENCIA)
-    coincidencias_ia = sum(1 for r in principales if r.tipo_inconsistencia == TipoInconsistencia.COINCIDE_IA)
     revision_manual = sum(1 for r in principales if r.tipo_inconsistencia == TipoInconsistencia.REQUIERE_REVISION)
     adicionales_org = sum(1 for r in principales if r.organigrama and not r.excel)
     duplicados = sum(1 for r in resultados if r.puesto_clave_normalizada.startswith("[DUP-"))
@@ -181,7 +180,7 @@ def _escribir_hoja_resumen(wb: Workbook, resultados: List[ComparisonResult], mod
     if incluye_word:
         total_word = sum(1 for r in principales if r.word is not None)
         en_las_tres = sum(1 for r in principales if r.excel and r.word and r.organigrama)
-        faltantes_word = sum(1 for r in principales if r.excel and not r.word and r.tipo_inconsistencia == TipoInconsistencia.PUESTO_FALTANTE)
+        faltantes_word = sum(1 for r in principales if r.excel and not r.word)
         adicionales_word = sum(1 for r in principales if r.word and not r.excel)
         filas_resumen += [
             ("Encontrados en Word", total_word),
@@ -192,8 +191,6 @@ def _escribir_hoja_resumen(wb: Workbook, resultados: List[ComparisonResult], mod
         filas_resumen.append(("Encontrados en Organigrama", total_org))
 
     filas_resumen.append(("Coincidencias mediante equivalencia institucional (abreviaturas)", equivalencias_institucionales))
-    if coincidencias_ia:
-        filas_resumen.append(("Coincidencias resueltas por IA (Ollama)", coincidencias_ia))
     if incluye_word:
         filas_resumen.append(("Faltantes reales en Word", faltantes_word))
     filas_resumen += [
@@ -233,7 +230,7 @@ def _escribir_hoja_resumen(wb: Workbook, resultados: List[ComparisonResult], mod
             1 for r in principales
             if getattr(r, campo_fuente) is not None
             and r.tipo_inconsistencia in (TipoInconsistencia.OK, TipoInconsistencia.COINCIDE_NORMALIZADO,
-                                           TipoInconsistencia.COINCIDE_EQUIVALENCIA, TipoInconsistencia.COINCIDE_IA)
+                                           TipoInconsistencia.COINCIDE_EQUIVALENCIA)
         )
         posibles = sum(
             1 for r in principales
@@ -243,7 +240,6 @@ def _escribir_hoja_resumen(wb: Workbook, resultados: List[ComparisonResult], mod
         faltantes = sum(
             1 for r in principales
             if getattr(r, campo_fuente) is None and r.excel is not None
-            and r.tipo_inconsistencia == TipoInconsistencia.PUESTO_FALTANTE
         )
         ws.append([nombre, extraidos, validos, coincidencias, posibles, faltantes])
 
@@ -267,3 +263,11 @@ def generar_reporte(resultados: List[ComparisonResult], ruta_salida: str,
     wb.save(ruta_salida)
     logger.info(f"Reporte generado en: {ruta_salida}")
     return ruta_salida
+
+
+def generar_reporte_bytes(resultados, excel_records=None, word_records=None,
+                          organigrama_records=None, modo=None) -> bytes:
+    """Reporte privado de una ejecución, sin archivos compartidos entre sesiones."""
+    with BytesIO() as buffer:
+        generar_reporte(resultados, buffer, excel_records, word_records, organigrama_records, modo)
+        return buffer.getvalue()
