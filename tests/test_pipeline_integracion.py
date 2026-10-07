@@ -12,7 +12,7 @@ import pytest
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline import ejecutar_analisis  # noqa: E402
-from models.models import TipoInconsistencia  # noqa: E402
+from models.models import TipoInconsistencia, NivelComparacion  # noqa: E402
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 RUTA_EXCEL = os.path.join(FIXTURES, "referencia.xlsx")
@@ -38,9 +38,13 @@ def test_pipeline_detecta_tipos_esperados():
     tipos_encontrados = {r.tipo_inconsistencia for r in resultado["resultados"]}
     esperados = {
         TipoInconsistencia.DUPLICADO,
-        TipoInconsistencia.COINCIDE_NORMALIZADO,
+        TipoInconsistencia.REQUIERE_REVISION,  # fixture anterior sin IDs en I ni continuidad de ramas verificable
         TipoInconsistencia.NIVEL_INCONSISTENTE,
         TipoInconsistencia.PUESTO_FALTANTE,
         TipoInconsistencia.PUESTO_ADICIONAL,
     }
     assert esperados.issubset(tipos_encontrados)
+
+    # La revisión de orden no elimina el resultado de coincidencia de nombre.
+    assert any(r.nivel_comparacion_nombre == NivelComparacion.NORMALIZADA for r in resultado["resultados"])
+    assert any(r.error_orden for r in resultado["excel_records"])
