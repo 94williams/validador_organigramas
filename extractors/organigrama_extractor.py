@@ -182,7 +182,7 @@ def _extraer_pagina_por_cajas(page, nombre_archivo: str, num_pagina: int) -> Opt
     lineas = _obtener_lineas_con_posicion(page)
     registros: List[PuestoRecord] = []
 
-    for caja in cajas:
+    for caja in sorted(cajas, key=lambda c: (c[1], c[0])):
         lineas_en_caja = [t for t, bbox in lineas if _punto_dentro_de_caja(caja, _centro(bbox))]
         if not lineas_en_caja:
             continue
