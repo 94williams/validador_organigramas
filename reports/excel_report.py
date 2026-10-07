@@ -24,6 +24,7 @@ from openpyxl.utils import get_column_letter
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from models.models import ComparisonResult, TipoInconsistencia  # noqa: E402
+from normalization.display_name import homologar_puesto_excel
 from utils.logger import get_logger  # noqa: E402
 
 logger = get_logger("excel_report")
@@ -75,8 +76,8 @@ def _encabezados_orden(modo):
 
 def _encabezados(modo) -> List[str]:
     if _incluye_word(modo):
-        return _ENCABEZADOS_INICIO + _ENCABEZADOS_WORD + _ENCABEZADOS_FIN + _encabezados_orden(modo)
-    return _ENCABEZADOS_INICIO + _ENCABEZADOS_FIN + _encabezados_orden(modo)
+        return _ENCABEZADOS_INICIO + _ENCABEZADOS_WORD + _ENCABEZADOS_FIN + _encabezados_orden(modo) + ["Excel - Puesto homologado"]
+    return _ENCABEZADOS_INICIO + _ENCABEZADOS_FIN + _encabezados_orden(modo) + ["Excel - Puesto homologado"]
 
 
 def _fila_desde_resultado(r: ComparisonResult, modo) -> list:
@@ -119,6 +120,7 @@ def _fila_desde_resultado(r: ComparisonResult, modo) -> list:
     fuentes = ["Excel"] + (["Word"] if _incluye_word(modo) else []) + ["Organigrama"]
     fila += [", ".join(map(str, r.posiciones.get(f, []))) or "—" for f in fuentes]
     fila += [r.estado_orden, r.observacion_orden]
+    fila.append(homologar_puesto_excel(r.excel.puesto_original) if r.excel and r.excel.valido else "—")
     return fila
 
 
