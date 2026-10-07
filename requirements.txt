@@ -15,9 +15,3 @@ pillow>=10.0
 
 # --- Pruebas ---
 pytest>=7.4
-
-# --- Ollama (OPCIONAL; solo necesario si config.OLLAMA_ENABLED = True) ---
-# Cliente HTTP para consultar un servidor Ollama LOCAL como segunda opinión
-# semántica en casos ambiguos. Si no se instala, o si OLLAMA_ENABLED es
-# False (valor por defecto), el resto del programa funciona sin cambios.
-requests>=2.31

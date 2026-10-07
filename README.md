@@ -165,9 +165,9 @@ Con esto, la app pide una contraseña antes de mostrar cualquier contenido — u
 
 ### Otras consideraciones de seguridad (§18)
 
-- Los archivos que subes se guardan temporalmente y se borran automáticamente al iniciar un nuevo análisis (no quedan copias acumuladas).
+- Los archivos que subes se guardan temporalmente y se borran automáticamente al terminar cada análisis, incluso si falla (no quedan copias acumuladas).
 - El límite de tamaño de archivo subido es 50 MB (`maxUploadSize` en `.streamlit/config.toml`, ajustable).
-- Ningún dato sale de tu máquina ni de tu red — todo el procesamiento es local (ver sección de Privacidad). La única excepción es si activas Ollama apuntando a un servidor remoto, lo cual no es la configuración por defecto.
+- Ningún dato sale de tu máquina ni de tu red — todo el procesamiento es local (ver sección de Privacidad).
 
 ---
 
@@ -246,11 +246,7 @@ Todo esto se configura en `config.py`:
 - **Prefijos jerárquicos residuales** que no son tipos oficiales del catálogo pero indican jerarquía distinta (`MODIFICADORES_JERARQUICOS_NO_CATALOGADOS`, ej. "vice-", "encargado de-"). El caso principal (Director vs. Subdirector) ya lo resuelve el catálogo directamente.
 - **Idioma y resolución del OCR** (`OCR_IDIOMA`, `OCR_DPI`).
 - **Catálogo oficial de niveles por tipo de puesto** (`CATALOGO_NIVELES_POR_TIPO_PUESTO`): mapea el "nombre de pila" de un puesto (ej. "Dirección General", "J.U.D.") a su(s) nivel(es) oficial(es) válido(s). Es la ÚNICA fuente de verdad para niveles — se usa para: (1) separar tipo de puesto y nombre específico, (2) validar el nivel encontrado contra el catálogo, (3) evitar que números que son parte del nombre del puesto (ej. "Zona 1", "Zona 2") se confundan con el nivel durante la extracción del organigrama. Si tu catálogo tiene categorías distintas a las de CDMX, edita este diccionario. Usa `EXCEPCIONES_CATALOGO_NIVELES` para excluir títulos que "heredan" una palabra de la jerarquía pero no corresponden a ese nivel (ej. "Secretaría Particular").
-- **Ollama (segunda opinión de IA, opcional y deshabilitada por defecto)**: para activarla, instala [Ollama](https://ollama.com), corre `ollama pull qwen2.5:7b-instruct`, deja el servidor corriendo (`ollama serve`, normalmente automático), instala la dependencia opcional `pip install requests`, y cambia en `config.py`:
-  ```python
-  OLLAMA_ENABLED = True
-  ```
-  Solo se consulta para el pequeño número de casos que el sistema determinista deja en "Requiere revisión" — nunca para el resto. Se puede ajustar `OLLAMA_MODEL`, `OLLAMA_CONFIANZA_MINIMA_PARA_ACEPTAR` (qué tan seguro debe estar el modelo para aceptar una coincidencia sin revisión manual) y `OLLAMA_TIMEOUT_SEGUNDOS` en el mismo archivo.
+- **Casos ambiguos**: permanecen en revisión manual. La comparación usa normalización, equivalencias institucionales y similitud por componentes.
 
 ---
 
@@ -372,91 +368,11 @@ Por cada pareja encontrada:
 - **Aprovechar jerarquía del organigrama para desambiguar duplicados por área** (mencionado también en la primera revisión): sigue siendo la mejora estructural más grande pendiente, fuera del alcance de esta corrección de extracción/equivalencias.
 - **Resumen por página del Word**: se implementó el desglose por fuente; el desglose adicional por página específica del Word no se implementó por no ser crítico para el problema de fondo (falsos faltantes) — se puede agregar reutilizando el campo `ubicacion.pagina` ya presente en cada registro si se necesita más adelante.
 
-## 11. Tercera revisión: refactorización estructural, catálogo único y Ollama opcional
+## 11. Comparación por componentes y revisión manual
 
-Una tercera auditoría, con instrucción explícita de "no agregar más if/else sino refactorizar", encontró y eliminó una duplicación real de lógica, separó formalmente TIPO DE PUESTO + NOMBRE ESPECÍFICO, y evaluó (con evidencia, antes de implementar) si conviene integrar Ollama como segunda opinión semántica.
+El catálogo único separa tipo de puesto y nombre específico. La comparación por componentes evita que un prefijo común largo oculte diferencias reales entre oficinas y protege los sufijos distintivos (A/B).
 
-### A. Diagnóstico
-
-Se auditó todo el proyecto buscando: valores hardcodeados, catálogos duplicados, lógica repetida entre fuentes, y reglas específicas por puesto/dependencia.
-
-**Hallazgo principal — lógica duplicada real:** existían **dos sistemas paralelos** resolviendo "¿son puestos de jerarquía distinta?": `config.PREFIJOS_JERARQUICOS` (lista manual de palabras: "sub", "vice", "adjunto a"...) en `matcher.py`, y `identificar_categoria_puesto()` (basado en el catálogo oficial) en `catalogo_niveles.py`, sin conexión entre ambos. Exactamente el tipo de duplicación que pediste auditar.
-
-**Hallazgo secundario — comparación por texto completo diluye diferencias reales:** al expandir abreviaturas (J.U.D. → "Jefatura de Unidad Departamental") antes de comparar, dos J.U.D. de áreas genuinamente distintas terminaban comparándose con un prefijo larguísimo idéntico, lo que **inflaba artificialmente el score de similitud** (un caso real subió de 83% a 94.6% solo por el efecto de dilución). Esto confirma exactamente el punto §17 de tu especificación: hay que comparar por **componentes** (tipo + nombre específico), no por cadena completa.
-
-**Hallazgo terciario — sufijos distintivos ("A"/"B") se fusionaban al 100%:** oficinas idénticas salvo por un sufijo de una letra (muy común en la estructura real: Dirección de Construcción "A"/"B"/"C"/"D") estaban recibiendo 100% de confianza de coincidencia por el efecto combinado de un solo carácter de diferencia en texto largo + el bono de "mismo tipo".
-
-Ningún valor hardcodeado de puesto o dependencia específica encontrado en el código de producción (ya se había limpiado en revisiones anteriores); `config.CATALOGO_NIVELES_POR_TIPO_PUESTO` ya era la única fuente de verdad para niveles.
-
-### B. Cambios realizados
-
-| Archivo | Cambio |
-|---|---|
-| `comparison/catalogo_niveles.py` | `identificar_categoria_puesto()` ahora **canoniza** alias (J.U.D./JUD y L.C.P./LCP resuelven al mismo tipo, sin importar cuál aparezca en el texto). Nueva función `separar_tipo_y_nombre_especifico()`: separa cualquier puesto en tipo/nombre específico/niveles del catálogo. Nueva `enriquecer_con_catalogo()`: puebla estos campos en cada `PuestoRecord` tras la extracción. |
-| `config.py` | `PREFIJOS_JERARQUICOS` eliminado; reemplazado por `MODIFICADORES_JERARQUICOS_NO_CATALOGADOS` (lista mínima, solo para modificadores que NO son tipos oficiales del catálogo — el caso principal, Director vs. Subdirector, ahora lo resuelve el catálogo directamente). Nueva sección `OLLAMA_*` (deshabilitado por defecto). |
-| `comparison/matcher.py` | La señal de "jerarquía distinta" ahora combina: tipo del catálogo (con alias canonizados) + modificadores residuales + sufijos distintivos de una letra (nuevo). Nueva función `evaluar_coincidencia_por_componentes()`: compara solo el nombre específico cuando ambos puestos comparten tipo reconocido, evitando la dilución por prefijo largo. |
-| `comparison/comparator.py` | Usa `evaluar_coincidencia_por_componentes()` en vez de comparación de texto completo. Nuevo campo `metodo_coincidencia` por resultado (Exacta/Normalización/Equivalencia/Fuzzy/IA/Revisión manual, §41). Nueva función `aplicar_segunda_opinion_ollama()` (post-procesamiento opcional). |
-| `models/models.py` | Nuevos: `EstadoNivel` (válido/fuera de catálogo/no encontrado/tipo no reconocido), `MetodoCoincidencia`, campos `tipo_puesto`, `tipo_puesto_display`, `nombre_especifico`, `niveles_catalogo`, `estado_nivel` en `PuestoRecord`; `metodo_coincidencia`, `ia_consultada`, `ia_explicacion` en `ComparisonResult`. |
-| `comparison/ollama_client.py` (nuevo) | Cliente HTTP hacia un servidor Ollama **local**, con caché en disco, validación estricta de esquema JSON, y degradación segura (si Ollama no responde o el JSON es inválido, el caso simplemente se queda en revisión manual — nunca se inventa una coincidencia). |
-| `pipeline.py` | Llama a `enriquecer_con_catalogo()` tras la extracción y a `aplicar_segunda_opinion_ollama()` tras la comparación. |
-| `reports/excel_report.py` | Nuevas columnas: Tipo de puesto, Nombre específico, Niveles según catálogo, Estado de nivel (por fuente), Método de coincidencia. |
-| `requirements.txt` | `requests` agregado como dependencia **opcional** (solo se usa si `OLLAMA_ENABLED=True`). |
-
-**Nada se eliminó sin justificar.** El catálogo, la extracción de Excel/Word/Organigrama, y el pipeline de comparación de 3 fuentes se mantuvieron intactos; los cambios fueron quirúrgicos sobre la lógica de matching y la capa de enriquecimiento.
-
-### C. Nueva lógica (extracción → tipo/nombre específico → comparación → confianza)
-
-```
-EXTRACCIÓN (Excel / Word / Organigrama)
-        │
-NORMALIZACIÓN (normalizar_puesto — sin tocar el texto original)
-        │
-CATÁLOGO DE config.py (enriquecer_con_catalogo):
-  tipo_puesto (canónico) + nombre_especifico + niveles_catalogo + estado_nivel
-        │
-MATCHING ENTRE FUENTES (emparejamiento global, no voraz):
-  ¿clave exacta o normalizada?         → Exacta / Normalización       (100%)
-  ¿coincide solo tras expandir abrev.? → Equivalencia institucional   (100%)
-  ¿mismo tipo de catálogo?             → comparar SOLO nombre específico
-  ¿tipos distintos o sin catálogo?     → comparar texto completo (respaldo)
-        │
-  ¿similitud alta (≥93)?               → Posible coincidencia
-  ¿similitud media (80-92)?            → Requiere revisión
-        │                                      │
-        │                              ¿OLLAMA_ENABLED?
-        │                                 NO         SÍ
-        │                                 │          │
-        │                             queda en   segunda opinión
-        │                             revisión    (JSON validado,
-        │                                          nunca decide niveles)
-        │                                              │
-        │                                    ¿confianza≥90% Y sin
-        │                                     pedir revisión humana?
-        │                                         SÍ        NO
-        │                                         │         │
-        │                                  Coincide por IA  sigue en revisión
-        ▼
-   RESULTADO + método de coincidencia + confianza + trazabilidad completa
-```
-
-### D. Pruebas realizadas
-
-- `tests/test_tipo_nombre_especifico.py` (12 pruebas): separación tipo/nombre específico con los ejemplos exactos del prompt maestro (§47-49), protección de sufijos distintivos "A"/"B", validación de niveles (§49: JUD+25→válido, JUD+40→inválido, etc.), nivel no encontrado nunca se asume.
-- `tests/test_ollama.py` (11 pruebas, con servidor Ollama **simulado** vía mock — no requiere Ollama instalado): confirma coincidencia ambigua real con alta confianza, nunca inventa coincidencia con baja confianza o si el propio modelo pide revisión humana, manejo de errores (timeout, JSON inválido, esquema incompleto) siempre degrada a revisión manual, caché evita consultas repetidas, y el sistema completo funciona igual con `OLLAMA_ENABLED=False`.
-- Suite completa: **82/82 pruebas pasan.**
-- Prueba de escala real: organigrama de 284 puestos + Excel sintético con abreviaturas forzadas a su forma completa → **0 falsos faltantes**, análisis completo en **1.3 segundos**.
-- Medición de tasa de ambigüedad real (§54): con variaciones realistas de escritura, **0% de casos** caen en "Requiere revisión" — el sistema determinista resuelve la gran mayoría. Se identificaron manualmente 2 pares genuinamente ambiguos (diferencias semánticas reales, no de formato) para validar el flujo de Ollama.
-
-### E. Evaluación de Ollama (§53) y por qué se implementó como opcional
-
-**Conclusión de la evaluación:** sí aporta valor, pero de forma muy acotada. La gran mayoría de los falsos faltantes reales tenían causas deterministas resolubles (abreviaturas, encabezados de tabla, bordes de PDF, asignación voraz) — todas corregidas en las tres revisiones. Lo que queda tras esas correcciones es un porcentaje pequeño de casos con ambigüedad **semántica genuina** (ej. "JUD de Seguimiento y Evaluación de Proyectos" vs "JUD de Seguimiento de Proyectos", 80.6%) donde ni el catálogo ni el fuzzy matching pueden decidir con certeza si son la misma oficina — exactamente el tipo de caso para el que una segunda opinión de un modelo de lenguaje tiene sentido.
-
-**Por qué quedó deshabilitada por defecto (`OLLAMA_ENABLED = False`):** requiere un servidor Ollama corriendo en tu máquina, que no pude instalar ni probar en vivo desde este entorno de desarrollo. La integración se implementó y probó exhaustivamente con un servidor **simulado**, validando toda la lógica (payload, esquema de respuesta, caché, manejo de errores) — pero la prueba con el modelo real (`qwen2.5:7b-instruct`) queda pendiente de que la actives en tu máquina. Instrucciones de activación en la sección 6 (`OLLAMA_ENABLED = True` en `config.py`, y tener Ollama corriendo con `ollama pull qwen2.5:7b-instruct`).
-
-### F. Problemas que todavía requieren revisión humana
-
-- Los pares genuinamente ambiguos por diferencia semántica real (no de formato) seguirán marcados "Requiere revisión" hasta que actives Ollama o los revises manualmente — es el comportamiento correcto por diseño (§14 del ajuste de equivalencias: mejor revisión manual que una coincidencia inventada).
-- Puestos con nombres no estándar que no corresponden a ningún tipo del catálogo (ej. "Asesor A", "Secretaría Particular") quedan con `tipo_puesto=None` y no se valida su nivel contra el catálogo — es esperado, no todos los puestos siguen la nomenclatura estándar de niveles.
+Los casos ambiguos permanecen en "Requiere revisión" para evaluación humana. No se utiliza un modelo de lenguaje, servidor de inferencia ni caché de respuestas. Se conservan los métodos Exacta, Normalización, Equivalencia institucional, Fuzzy y Revisión manual.
 
 ## 12. Cuarta revisión: modos de análisis y acceso local/remoto
 
@@ -487,3 +403,11 @@ Se evaluaron Tailscale, ZeroTier y Cloudflare Tunnel (las tres opciones que pedi
 ## 13. Privacidad
 
 Todo el análisis corre localmente en tu máquina. Los archivos temporales que crea la interfaz de Streamlit al subir documentos se guardan en el directorio temporal del sistema operativo y no se copian a ningún otro lugar del proyecto.
+
+## 14. Correcciones de revisión
+
+- Cada sesión conserva su reporte en memoria; no se comparte un archivo de salida entre usuarios.
+- Una hoja solicitada inexistente produce un error con los nombres disponibles y señala un análisis incompleto.
+- Los faltantes se cuentan por presencia en cada fuente, incluso si el mismo puesto presenta niveles distintos o coincidencia aproximada. El detalle conserva la ausencia al informar diferencias de nivel.
+- La búsqueda es literal, incluidos caracteres como paréntesis y corchetes.
+- Los contadores muestran registros válidos de origen y puestos únicos por nombre normalizado, sin sumar filas de diagnóstico de duplicados.
