@@ -411,3 +411,11 @@ Todo el análisis corre localmente en tu máquina. Los archivos temporales que c
 - Los faltantes se cuentan por presencia en cada fuente, incluso si el mismo puesto presenta niveles distintos o coincidencia aproximada. El detalle conserva la ausencia al informar diferencias de nivel.
 - La búsqueda es literal, incluidos caracteres como paréntesis y corchetes.
 - Los contadores muestran registros válidos de origen y puestos únicos por nombre normalizado, sin sumar filas de diagnóstico de duplicados.
+
+## 15. Revisión del orden de puestos
+
+Excel define la secuencia esperada. Las posiciones son ordinales desde 1 de los registros válidos extraídos (no números de fila, ni niveles jerárquicos). Se respetan el orden de hojas y filas de Excel y el orden de extracción de tablas/páginas de Word. El organigrama se lee por página, de arriba abajo y de izquierda a derecha; no se deduce el recorrido de las líneas de dependencia jerárquica.
+
+Si un puesto emparejado ocupa otra posición, aparece "Encontrado en diferente posición; realizar ajuste", con las posiciones de cada fuente. También se señalan desplazamientos por puestos adicionales o faltantes. Al corregir los documentos y volver a analizarlos, desaparece la alerta si las posiciones coinciden.
+
+La revisión conserva diferencias de nivel, faltantes y coincidencias aproximadas: el orden se muestra en columnas independientes y tiene contador y filtro propios. Una coincidencia aproximada sigue requiriendo revisión de nombre. Los duplicados y errores de extracción impiden certificar el orden de las fuentes afectadas; se muestran todas las posiciones candidatas y "No verificable". En el modo sin Word no se valida ni se muestra su posición.

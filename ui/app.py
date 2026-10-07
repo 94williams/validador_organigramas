@@ -145,6 +145,12 @@ else:
     col5.metric("✅ Sin problema", ok_count)
     col6.metric("⚠️ Requieren atención", revisar_count)
 
+    st.metric("↕️ Encontrados en diferente posición", sum(
+        r.estado_orden == "Diferente posición" for r in resultados
+        if not r.puesto_clave_normalizada.startswith("[DUP-")))
+    st.caption("Orden esperado: Excel. Posiciones de puestos válidos, desde 1. "
+               "Organigrama: por página, de arriba abajo y de izquierda a derecha.")
+
     st.header("3. Detalle de inconsistencias")
 
     encabezados = _encabezados(modo_actual)
@@ -156,6 +162,9 @@ else:
         "Filtrar por tipo de inconsistencia", tipos_disponibles, default=tipos_disponibles,
     )
     df_filtrado = df[df["Tipo de inconsistencia"].isin(tipos_seleccionados)]
+
+    if st.checkbox("Solo puestos encontrados en diferente posición"):
+        df_filtrado = df_filtrado[df_filtrado["Estado de orden"] == "Diferente posición"]
 
     busqueda = st.text_input("Buscar puesto")
     if busqueda:

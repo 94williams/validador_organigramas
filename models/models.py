@@ -68,6 +68,7 @@ class TipoInconsistencia(str, Enum):
     DUPLICADO = "Duplicado"
     DUPLICADO_NIVEL_DISTINTO = "Duplicado con nivel distinto"
     REQUIERE_REVISION = "Requiere revisión"
+    ORDEN_DIFERENTE = "Encontrado en diferente posición; realizar ajuste"
     ERROR_EXTRACCION = "Error de extracción"
 
 
@@ -150,3 +151,7 @@ class ComparisonResult:
     equivalencia_aplicada: str = ""  # ej. "J.U.D. → jefatura de unidad departamental"
     puesto_canonico: str = ""  # clave de comparación con abreviaturas expandidas
     metodo_coincidencia: "MetodoCoincidencia" = None  # cómo se determinó la coincidencia (auditoría, §41)
+
+    posiciones: dict = field(default_factory=dict)  # ordinales de registros válidos, por fuente
+    estado_orden: str = "No verificable"
+    observacion_orden: str = ""
