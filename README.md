@@ -419,3 +419,9 @@ Excel define la secuencia esperada. Las posiciones son ordinales desde 1 de los 
 Si un puesto emparejado ocupa otra posición, aparece "Encontrado en diferente posición; realizar ajuste", con las posiciones de cada fuente. También se señalan desplazamientos por puestos adicionales o faltantes. Al corregir los documentos y volver a analizarlos, desaparece la alerta si las posiciones coinciden.
 
 La revisión conserva diferencias de nivel, faltantes y coincidencias aproximadas: el orden se muestra en columnas independientes y tiene contador y filtro propios. Una coincidencia aproximada sigue requiriendo revisión de nombre. Los duplicados y errores de extracción impiden certificar el orden de las fuentes afectadas; se muestran todas las posiciones candidatas y "No verificable". En el modo sin Word no se valida ni se muestra su posición.
+
+## 16. Puesto homologado de Excel
+
+La última columna de Detalle y de la tabla en pantalla, "Excel - Puesto homologado", presenta J.U.D. para Jefatura/Jefe de Unidad Departamental y L.C.P. para Líder Coordinador de Proyectos. También unifica siglas con o sin puntos, espacios y diferencias de mayúsculas. Solo se reemplaza el tipo al inicio: se conservan el resto del nombre, sus acentos y su escritura. Otros puestos se muestran sin cambios; sin un registro válido de Excel se muestra —.
+
+Es una columna derivada para copiar el nombre homologado; no modifica el archivo de entrada, las columnas anteriores, los niveles ni la comparación de nombres u orden.
