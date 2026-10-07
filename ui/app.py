@@ -148,8 +148,8 @@ else:
     st.metric("↕️ Encontrados en diferente posición", sum(
         r.estado_orden == "Diferente posición" for r in resultados
         if not r.puesto_clave_normalizada.startswith("[DUP-")))
-    st.caption("Orden esperado: Excel. Posiciones de puestos válidos, desde 1. "
-               "Organigrama: por página, de arriba abajo y de izquierda a derecha.")
+    st.caption("Orden esperado: consecutivo de la columna I del Excel. Word: puestos leídos desde 1. "
+               "Organigrama: cada rama completa, siguiendo conexiones; ramas hermanas de izquierda a derecha.")
 
     st.header("3. Detalle de inconsistencias")
 

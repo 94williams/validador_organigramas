@@ -414,7 +414,13 @@ Todo el análisis corre localmente en tu máquina. Los archivos temporales que c
 
 ## 15. Revisión del orden de puestos
 
-Excel define la secuencia esperada. Las posiciones son ordinales desde 1 de los registros válidos extraídos (no números de fila, ni niveles jerárquicos). Se respetan el orden de hojas y filas de Excel y el orden de extracción de tablas/páginas de Word. El organigrama se lee por página, de arriba abajo y de izquierda a derecha; no se deduce el recorrido de las líneas de dependencia jerárquica.
+La columna I del Excel (`EXCEL_COL_CONSECUTIVO`) define la posición esperada. Debe contener enteros positivos, únicos en las hojas seleccionadas. No se usan los números de fila: el ID 11 sigue siendo 11 aunque sea el primer registro o existan huecos en la secuencia. Los registros se presentan por ID; un ID vacío, fraccionario o repetido muestra «Revisar consecutivo del Excel». Los encabezados repetidos reconocidos se excluyen antes de extraer registros. Otros textos sin ID se conservan como incidencias de orden para evitar eliminar un puesto legítimo por error.
+
+Word conserva el orden de extracción de sus tablas/páginas y enumera puestos válidos desde 1. El organigrama se recorre en profundidad: superior, primera rama completa, siguiente rama. Los hijos se ordenan de izquierda a derecha. Los conectores ortogonales unen la parte inferior del superior con la parte superior de sus dependientes; las uniones en T permiten reconocer líneas compartidas entre hermanos.
+
+Solo se certifica un árbol completo e inequívoco. Cajas desconectadas, conexiones laterales, curvas/diagonales, cruces interiores sin unión inequívoca, varios superiores o raíces, y extracción por OCR/cercanía muestran «Orden no verificable; revisar conexión», sin publicar posiciones supuestas. La continuidad entre páginas aún requiere revisión manual: un organigrama con puestos en varias páginas no recibe un orden global automático. Se siguen extrayendo sus nombres y niveles para las demás comprobaciones.
+
+Los registros creados directamente por código, fuera del extractor de archivos, pueden seguir usando el ordinal como compatibilidad si no aportan un consecutivo; todo archivo Excel procesado aporta un ID o una incidencia explícita.
 
 Si un puesto emparejado ocupa otra posición, aparece "Encontrado en diferente posición; realizar ajuste", con las posiciones de cada fuente. También se señalan desplazamientos por puestos adicionales o faltantes. Al corregir los documentos y volver a analizarlos, desaparece la alerta si las posiciones coinciden.
 

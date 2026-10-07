@@ -128,6 +128,10 @@ class PuestoRecord:
     niveles_catalogo: list = field(default_factory=list)  # niveles oficiales válidos para el tipo detectado
     estado_nivel: Optional["EstadoNivel"] = None  # válido / fuera de catálogo / no encontrado / tipo no reconocido
 
+    consecutivo_excel: Optional[int] = None
+    consecutivo_original: Optional[str] = None
+    error_orden: str = ""  # No invalida el nombre ni la revisión de nivel.
+
     @property
     def valido(self) -> bool:
         return self.error is None and bool(self.puesto_original and self.puesto_original.strip())
