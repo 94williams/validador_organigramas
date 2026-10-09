@@ -78,7 +78,7 @@ def _encabezados_homologacion(modo):
     columnas.append("Homologado: Excel vs Organigrama")
     if _incluye_word(modo):
         columnas.append("Homologado: Word vs Organigrama")
-    return columnas + ["Resultado de homologación", "Similitud de nombres homologados (%)"]
+    return columnas + ["Resultado de homologación", "Detalle de inconsistencia de nombres", "Similitud de nombres homologados (%)"]
 
 
 def _encabezados(modo) -> List[str]:
@@ -122,15 +122,47 @@ def _fila_desde_resultado(r: ComparisonResult, modo) -> list:
         r.equivalencia_aplicada,
         r.advertencia_catalogo,
     ]
-    registros = [r.excel] + ([r.word] if _incluye_word(modo) else []) + [r.organigrama]
+    registros = [r.excel] + ([r.word] if _incluye_word(modo) else [])
     fila += [homologar_puesto(f.puesto_original) if f and f.valido else "—" for f in registros]
+    # El organigrama es la referencia visible: conservar exactamente el texto extraído.
+    fila.append(r.organigrama.puesto_original if r.organigrama and r.organigrama.valido else "—")
     pares = (["Excel vs Word"] if _incluye_word(modo) else []) + ["Excel vs Organigrama"]
     if _incluye_word(modo):
         pares.append("Word vs Organigrama")
     fila += [r.comparaciones_homologadas.get(par, "No comparable") for par in pares]
     fila.append(r.estado_homologacion)
+    fila.append(_detalle_nombres(r, modo))
     fila.append(r.similitud_homologada if r.similitud_homologada is not None else "No comparable")
     return fila
+
+
+def _detalle_nombres(r, modo):
+    registros = {"Excel": r.excel, "Organigrama": r.organigrama}
+    if _incluye_word(modo):
+        registros["Word"] = r.word
+    detalles = []
+    for fuente, registro in registros.items():
+        if registro is None:
+            detalles.append(f"{fuente}: puesto no encontrado en esta comparación.")
+        elif not registro.valido:
+            detalles.append(f"{fuente}: error de extracción; revisar el documento.")
+    for pareja, estado in r.comparaciones_homologadas.items():
+        a, b = pareja.split(" vs ")
+        if a not in registros or b not in registros:
+            continue
+        if estado == "Revisar duplicados":
+            detalles.append(f"{pareja}: hay nombres duplicados; no se puede determinar una correspondencia única.")
+        elif estado == "No coinciden":
+            def nombre(fuente):
+                registro = registros[fuente]
+                if registro is None or not registro.valido:
+                    return "—"
+                return registro.puesto_original if fuente == "Organigrama" else homologar_puesto(registro.puesto_original)
+            detalles.append(f'{pareja}: nombres diferentes: «{nombre(a)}» / «{nombre(b)}».')
+    if detalles:
+        return " ".join(detalles)
+    return ("Sin diferencias de nombre tras homologación. Los niveles se validan por separado."
+            if r.estado_homologacion == "Coinciden" else "Comparación de nombres pendiente.")
 
 
 def _autoajustar_columnas(ws):

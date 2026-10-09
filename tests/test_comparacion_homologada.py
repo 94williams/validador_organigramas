@@ -127,3 +127,44 @@ def test_porcentaje_toma_peor_pareja_y_se_exporta_como_numero():
     assert r.similitud_homologada is None
     fila = _fila_desde_resultado(r, 'completo')
     assert fila[headers.index('Similitud de nombres homologados (%)')] == 'No comparable'
+
+
+@pytest.mark.parametrize('nombre', ['J. U. D. de Archivo', 'l.c.p. de Gestión', 'Jefatura de Unidad Departamental de Archivo'])
+def test_reporte_conserva_literalmente_nombre_del_organigrama(nombre):
+    r = comparar_fuentes([rec(Fuente.EXCEL, nombre)], [rec(Fuente.WORD, nombre)],
+                         [rec(Fuente.ORGANIGRAMA, nombre)])[0]
+    wb = openpyxl.load_workbook(BytesIO(generar_reporte_bytes([r])))
+    headers = [c.value for c in wb['Detalle'][1]]
+    row = dict(zip(headers, [c.value for c in wb['Detalle'][2]]))
+    assert row['Organigrama - Puesto homologado'] == nombre
+    assert row['Resultado de homologación'] == 'Coinciden'
+    assert 'Sin diferencias' in row['Detalle de inconsistencia de nombres']
+
+
+def test_detalle_identifica_parejas_y_nombres_diferentes():
+    from comparison.homologation import verificar_homologacion
+    from models.models import ComparisonResult
+    e = rec(Fuente.EXCEL, 'Jefatura de Unidad Departamental de Archivo')
+    w = rec(Fuente.WORD, 'JUD de Archivo')
+    o = rec(Fuente.ORGANIGRAMA, 'J.U.D. de Archivo General')
+    r = ComparisonResult('archivo', excel=e, word=w, organigrama=o)
+    verificar_homologacion([r], [e], [w], [o])
+    row = dict(zip(_encabezados('completo'), _fila_desde_resultado(r, 'completo')))
+    detail = row['Detalle de inconsistencia de nombres']
+    assert 'Excel vs Organigrama' in detail and 'Word vs Organigrama' in detail
+    assert 'Excel vs Word' not in detail
+    assert '«J.U.D. de Archivo» / «J.U.D. de Archivo General»' in detail
+    assert row['Resultado de homologación'] == 'No coinciden'
+
+
+def test_detalle_faltantes_y_duplicados_no_afirma_coincidencia():
+    r = comparar_fuentes([rec(Fuente.EXCEL, 'JUD de Archivo')], [],
+                         [rec(Fuente.ORGANIGRAMA, 'JUD de Archivo')])[0]
+    row = dict(zip(_encabezados('completo'), _fila_desde_resultado(r, 'completo')))
+    assert 'Word: puesto no encontrado' in row['Detalle de inconsistencia de nombres']
+    resultados = comparar_fuentes([rec(Fuente.EXCEL, 'JUD de Archivo')]*2, [],
+                                 [rec(Fuente.ORGANIGRAMA, 'JUD de Archivo')], incluir_word=False)
+    principal = next(r for r in resultados if r.estado_homologacion == 'Revisar duplicados')
+    row = dict(zip(_encabezados('excel_organigrama'), _fila_desde_resultado(principal, 'excel_organigrama')))
+    assert 'duplicados' in row['Detalle de inconsistencia de nombres']
+    assert 'Word' not in row['Detalle de inconsistencia de nombres']
