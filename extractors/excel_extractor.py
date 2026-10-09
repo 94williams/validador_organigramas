@@ -12,8 +12,6 @@ que es justo lo que pide la trazabilidad (punto 10 del planteamiento).
 import os
 import re
 import sys
-from collections import Counter
-from decimal import Decimal, InvalidOperation
 from typing import List, Optional, Tuple
 
 import openpyxl
@@ -91,16 +89,6 @@ def _buscar_columnas_por_encabezado(ws) -> Optional[Tuple[int, int, int]]:
         if col_puesto and col_nivel:
             return fila_idx, col_puesto, col_nivel
     return None
-
-
-def _leer_consecutivo(valor):
-    if valor is None or isinstance(valor, bool):
-        return None
-    try:
-        numero = Decimal(str(valor).strip())
-        return int(numero) if numero.is_finite() and numero > 0 and numero == numero.to_integral_value() else None
-    except (InvalidOperation, ValueError):
-        return None
 
 
 def _es_encabezado_repetido(puesto, nivel):
@@ -197,12 +185,6 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
                 )
                 continue
 
-            valor_id = ws.cell(row=fila_idx, column=column_index_from_string(config.EXCEL_COL_CONSECUTIVO)).value
-            consecutivo = _leer_consecutivo(valor_id)
-            error_orden = "" if consecutivo is not None else (
-                f"Revisar consecutivo del Excel: {config.EXCEL_COL_CONSECUTIVO}{fila_idx} "
-                f"de '{nombre_hoja}' debe contener un entero positivo."
-            )
             puesto_str = str(val_puesto).strip()
             nivel_str = None if val_nivel is None else val_nivel
 
@@ -220,17 +202,8 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
                 ubicacion=ubicacion,
                 metodo_extraccion=MetodoExtraccion.CELDA_EXCEL,
                 confianza_extraccion=1.0,
-                consecutivo_excel=consecutivo,
-                consecutivo_original=None if valor_id is None else str(valor_id),
-                error_orden=error_orden,
             ))
 
-    ids = Counter(r.consecutivo_excel for r in registros if r.consecutivo_excel is not None)
-    for registro in registros:
-        if ids[registro.consecutivo_excel] > 1:
-            registro.error_orden = f"Revisar consecutivo del Excel: ID {registro.consecutivo_excel} repetido."
-    # Los saltos se conservan: un ID 11 nunca se renumera a 10.
-    registros.sort(key=lambda r: (r.consecutivo_excel is None, r.consecutivo_excel or 0))
     wb.close()
     logger.info(f"Excel '{nombre_archivo}': {len(registros)} registro(s) extraído(s).")
     return registros

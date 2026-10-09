@@ -126,7 +126,8 @@ def expandir_abreviaturas(texto_normalizado: str) -> str:
 
 def normalizar_para_comparacion(puesto_normalizado: str) -> str:
     """Clave usada para EMPAREJAR puestos entre fuentes distintas (ver comparator.py)."""
-    return expandir_abreviaturas(puesto_normalizado)
+    from normalization.display_name import homologar_puesto
+    return expandir_abreviaturas(normalizar_puesto(homologar_puesto(puesto_normalizado)))
 
 
 _PATRON_ACRONIMO_CON_PUNTOS = re.compile(r"^([A-ZÁÉÍÓÚÑ]\.){2,6}$")

@@ -412,22 +412,14 @@ Todo el análisis corre localmente en tu máquina. Los archivos temporales que c
 - La búsqueda es literal, incluidos caracteres como paréntesis y corchetes.
 - Los contadores muestran registros válidos de origen y puestos únicos por nombre normalizado, sin sumar filas de diagnóstico de duplicados.
 
-## 15. Revisión del orden de puestos
+## 15. Comparación por puesto homologado
 
-La columna I del Excel (`EXCEL_COL_CONSECUTIVO`) define la posición esperada. Debe contener enteros positivos, únicos en las hojas seleccionadas. No se usan los números de fila: el ID 11 sigue siendo 11 aunque sea el primer registro o existan huecos en la secuencia. Los registros se presentan por ID; un ID vacío, fraccionario o repetido muestra «Revisar consecutivo del Excel». Los encabezados repetidos reconocidos se excluyen antes de extraer registros. Otros textos sin ID se conservan como incidencias de orden para evitar eliminar un puesto legítimo por error.
+La revisión por posición, los consecutivos de columna I y la reconstrucción del orden por ramas se retiraron. Un puesto puede coincidir en cualquier lugar de Word u organigrama. La extracción conserva coordenadas internas para leer las cajas PDF y diagnosticar errores, pero no las compara ni exporta como criterio de aceptación.
 
-Word conserva el orden de extracción de sus tablas/páginas y enumera puestos válidos desde 1. El organigrama se recorre en profundidad: superior, primera rama completa, siguiente rama. Los hijos se ordenan de izquierda a derecha. Los conectores ortogonales unen la parte inferior del superior con la parte superior de sus dependientes; las uniones en T permiten reconocer líneas compartidas entre hermanos.
+Al final de la tabla y del reporte se muestran los nombres homologados de Excel, Word (solo en modo completo) y Organigrama, las comparaciones por pareja y el resultado global de homologación.
 
-Solo se certifica un árbol completo e inequívoco. Cajas desconectadas, conexiones laterales, curvas/diagonales, cruces interiores sin unión inequívoca, varios superiores o raíces, y extracción por OCR/cercanía muestran «Orden no verificable; revisar conexión», sin publicar posiciones supuestas. La continuidad entre páginas aún requiere revisión manual: un organigrama con puestos en varias páginas no recibe un orden global automático. Se siguen extrayendo sus nombres y niveles para las demás comprobaciones.
+Jefatura/Jefe de Unidad Departamental, JUD, J.U.D. y J U D se homologan a J.U.D.; Líder Coordinador de Proyectos, LCP, L.C.P. y L C P a L.C.P. La presentación conserva el resto del nombre y sus acentos. La comparación ignora mayúsculas/acentos/espacios según las reglas existentes y aplica las equivalencias del catálogo. Homologar no elimina diferencias de área, sufijos ni niveles.
 
-Los registros creados directamente por código, fuera del extractor de archivos, pueden seguir usando el ordinal como compatibilidad si no aportan un consecutivo; todo archivo Excel procesado aporta un ID o una incidencia explícita.
+«Coinciden» significa que los nombres emparejados tienen la misma clave homologada; «No coinciden» conserva las diferencias reales o coincidencias aproximadas pendientes; «No comparable» señala fuentes ausentes o errores; «Revisar duplicados» evita certificar un emparejamiento ambiguo. La homologación de nombres se evalúa separadamente de los niveles, faltantes y demás inconsistencias. Los nombres originales y archivos de entrada permanecen intactos.
 
-Si un puesto emparejado ocupa otra posición, aparece "Encontrado en diferente posición; realizar ajuste", con las posiciones de cada fuente. También se señalan desplazamientos por puestos adicionales o faltantes. Al corregir los documentos y volver a analizarlos, desaparece la alerta si las posiciones coinciden.
-
-La revisión conserva diferencias de nivel, faltantes y coincidencias aproximadas: el orden se muestra en columnas independientes y tiene contador y filtro propios. Una coincidencia aproximada sigue requiriendo revisión de nombre. Los duplicados y errores de extracción impiden certificar el orden de las fuentes afectadas; se muestran todas las posiciones candidatas y "No verificable". En el modo sin Word no se valida ni se muestra su posición.
-
-## 16. Puesto homologado de Excel
-
-La última columna de Detalle y de la tabla en pantalla, "Excel - Puesto homologado", presenta J.U.D. para Jefatura/Jefe de Unidad Departamental y L.C.P. para Líder Coordinador de Proyectos. También unifica siglas con o sin puntos, espacios y diferencias de mayúsculas. Solo se reemplaza el tipo al inicio: se conservan el resto del nombre, sus acentos y su escritura. Otros puestos se muestran sin cambios; sin un registro válido de Excel se muestra —.
-
-Es una columna derivada para copiar el nombre homologado; no modifica el archivo de entrada, las columnas anteriores, los niveles ni la comparación de nombres u orden.
+El reporte omite la advertencia de mayúsculas. Las tres columnas homologadas quedan juntas, seguidas del detalle por parejas, el resultado global y «Similitud de nombres homologados (%)». Este porcentaje es el mínimo de la similitud de caracteres (RapidFuzz ratio) entre cada pareja de nombres normalizados y homologados; 100 indica igualdad de las claves, no validez de niveles ni certeza estadística. Una diferencia real nunca se redondea a 100. Si falta una fuente participante, hay errores o duplicados, se muestra «No comparable». En modo Excel–Organigrama se calcula solamente esa pareja.

@@ -34,17 +34,18 @@ def test_ultima_columna_y_original_sin_modificaciones(modo):
     antes = deepcopy(r)
     headers = _encabezados(modo)
     fila = _fila_desde_resultado(r, modo)
-    assert headers[-2:] == ['Observación de orden', 'Excel - Puesto homologado']
+    assert 'Excel - Puesto homologado' in headers
+    assert headers[-1] == 'Similitud de nombres homologados (%)'
     assert len(headers) == len(fila)
     assert fila[headers.index('Excel - Original')] == original
-    assert fila[-1] == 'L.C.P. de Gestión'
+    assert fila[headers.index('Excel - Puesto homologado')] == 'L.C.P. de Gestión'
     wb = openpyxl.load_workbook(BytesIO(generar_reporte_bytes([r], modo=modo)))
     ws = wb['Detalle']
-    assert ws.cell(1, ws.max_column).value == 'Excel - Puesto homologado'
-    assert ws.cell(2, ws.max_column).value == 'L.C.P. de Gestión'
+    assert ws.cell(1, ws.max_column).value == 'Similitud de nombres homologados (%)'
+    assert ws.cell(2, headers.index('Excel - Puesto homologado') + 1).value == 'L.C.P. de Gestión'
     assert r == antes
 
 
 def test_sin_excel_no_inventa_nombre_desde_otra_fuente():
     r = ComparisonResult('clave', word=PuestoRecord(Fuente.WORD, 'JUD de Archivo', '25'))
-    assert _fila_desde_resultado(r, 'completo')[-1] == '—'
+    assert _fila_desde_resultado(r, 'completo')[_encabezados('completo').index('Excel - Puesto homologado')] == '—'
