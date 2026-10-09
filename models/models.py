@@ -68,7 +68,6 @@ class TipoInconsistencia(str, Enum):
     DUPLICADO = "Duplicado"
     DUPLICADO_NIVEL_DISTINTO = "Duplicado con nivel distinto"
     REQUIERE_REVISION = "Requiere revisión"
-    ORDEN_DIFERENTE = "Encontrado en diferente posición; realizar ajuste"
     ERROR_EXTRACCION = "Error de extracción"
 
 
@@ -128,10 +127,6 @@ class PuestoRecord:
     niveles_catalogo: list = field(default_factory=list)  # niveles oficiales válidos para el tipo detectado
     estado_nivel: Optional["EstadoNivel"] = None  # válido / fuera de catálogo / no encontrado / tipo no reconocido
 
-    consecutivo_excel: Optional[int] = None
-    consecutivo_original: Optional[str] = None
-    error_orden: str = ""  # No invalida el nombre ni la revisión de nivel.
-
     @property
     def valido(self) -> bool:
         return self.error is None and bool(self.puesto_original and self.puesto_original.strip())
@@ -156,6 +151,6 @@ class ComparisonResult:
     puesto_canonico: str = ""  # clave de comparación con abreviaturas expandidas
     metodo_coincidencia: "MetodoCoincidencia" = None  # cómo se determinó la coincidencia (auditoría, §41)
 
-    posiciones: dict = field(default_factory=dict)  # ordinales de registros válidos, por fuente
-    estado_orden: str = "No verificable"
-    observacion_orden: str = ""
+    comparaciones_homologadas: dict = field(default_factory=dict)
+    estado_homologacion: str = "No comparable"
+    similitud_homologada: Optional[float] = None  # 0–100; None si falta una comparación fiable

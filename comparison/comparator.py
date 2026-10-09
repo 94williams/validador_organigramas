@@ -33,7 +33,7 @@ from models.models import (  # noqa: E402
     PuestoRecord, ComparisonResult, TipoInconsistencia, NivelComparacion, Fuente, MetodoCoincidencia,
 )
 from comparison.matcher import evaluar_similitud_con_reglas, evaluar_coincidencia_por_componentes, comparar_niveles  # noqa: E402
-from comparison.order_validator import verificar_orden
+from comparison.homologation import verificar_homologacion
 from comparison.catalogo_niveles import validar_nivel_catalogo  # noqa: E402
 from normalization.normalizer import normalizar_para_comparacion, detectar_abreviaturas_en_texto, detectar_posible_abreviatura_no_reconocida  # noqa: E402
 from utils.logger import get_logger  # noqa: E402
@@ -459,7 +459,7 @@ def comparar_fuentes(
         resultado.puesto_canonico = normalizar_para_comparacion(org_rec.puesto_normalizado)
         resultados.append(resultado)
 
-    verificar_orden(resultados, excel_records, word_records, organigrama_records, incluir_word)
+    verificar_homologacion(resultados, excel_records, word_records, organigrama_records, incluir_word)
 
     logger.info(f"Comparación finalizada: {len(resultados)} resultado(s) generado(s).")
     return resultados

@@ -38,13 +38,12 @@ def test_pipeline_detecta_tipos_esperados():
     tipos_encontrados = {r.tipo_inconsistencia for r in resultado["resultados"]}
     esperados = {
         TipoInconsistencia.DUPLICADO,
-        TipoInconsistencia.REQUIERE_REVISION,  # fixture anterior sin IDs en I ni continuidad de ramas verificable
+        TipoInconsistencia.COINCIDE_NORMALIZADO,
         TipoInconsistencia.NIVEL_INCONSISTENTE,
         TipoInconsistencia.PUESTO_FALTANTE,
         TipoInconsistencia.PUESTO_ADICIONAL,
     }
     assert esperados.issubset(tipos_encontrados)
 
-    # La revisión de orden no elimina el resultado de coincidencia de nombre.
+    # La homologación conserva el resultado de coincidencia de nombre.
     assert any(r.nivel_comparacion_nombre == NivelComparacion.NORMALIZADA for r in resultado["resultados"])
-    assert any(r.error_orden for r in resultado["excel_records"])

@@ -24,13 +24,12 @@ from openpyxl.utils import get_column_letter
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from models.models import ComparisonResult, TipoInconsistencia  # noqa: E402
-from normalization.display_name import homologar_puesto_excel
+from normalization.display_name import homologar_puesto
 from utils.logger import get_logger  # noqa: E402
 
 logger = get_logger("excel_report")
 
 COLOR_POR_TIPO = {
-    TipoInconsistencia.ORDEN_DIFERENTE: "F4B183",
     TipoInconsistencia.OK: "C6EFCE",                          # verde
     TipoInconsistencia.COINCIDE_NORMALIZADO: "D9E1F2",        # azul claro
     TipoInconsistencia.COINCIDE_EQUIVALENCIA: "B4C7E7",       # azul medio (equivalencia institucional)
@@ -59,7 +58,7 @@ _ENCABEZADOS_FIN = [
     "Organigrama - Original", "Organigrama - Nivel", "Organigrama - Estado de nivel",
     "Resultado", "Tipo de inconsistencia", "Nivel de coincidencia de nombre", "Método de coincidencia",
     "Confianza (%)", "Motivo", "Equivalencia institucional aplicada",
-    "Advertencia de catálogo (informativa)", "Advertencia de formato (mayúsculas)",
+    "Advertencia de catálogo (informativa)",
 ]
 
 
@@ -69,15 +68,22 @@ def _incluye_word(modo) -> bool:
     return valor != "excel_organigrama"
 
 
-def _encabezados_orden(modo):
-    return (["Excel - Posición"] + (["Word - Posición"] if _incluye_word(modo) else [])
-            + ["Organigrama - Posición", "Estado de orden", "Observación de orden"])
+def _encabezados_homologacion(modo):
+    columnas = ["Excel - Puesto homologado"]
+    if _incluye_word(modo):
+        columnas.append("Word - Puesto homologado")
+    columnas.append("Organigrama - Puesto homologado")
+    if _incluye_word(modo):
+        columnas.append("Homologado: Excel vs Word")
+    columnas.append("Homologado: Excel vs Organigrama")
+    if _incluye_word(modo):
+        columnas.append("Homologado: Word vs Organigrama")
+    return columnas + ["Resultado de homologación", "Similitud de nombres homologados (%)"]
 
 
 def _encabezados(modo) -> List[str]:
-    if _incluye_word(modo):
-        return _ENCABEZADOS_INICIO + _ENCABEZADOS_WORD + _ENCABEZADOS_FIN + _encabezados_orden(modo) + ["Excel - Puesto homologado"]
-    return _ENCABEZADOS_INICIO + _ENCABEZADOS_FIN + _encabezados_orden(modo) + ["Excel - Puesto homologado"]
+    return (_ENCABEZADOS_INICIO + (_ENCABEZADOS_WORD if _incluye_word(modo) else [])
+            + _ENCABEZADOS_FIN + _encabezados_homologacion(modo))
 
 
 def _fila_desde_resultado(r: ComparisonResult, modo) -> list:
@@ -115,12 +121,15 @@ def _fila_desde_resultado(r: ComparisonResult, modo) -> list:
         r.detalle,
         r.equivalencia_aplicada,
         r.advertencia_catalogo,
-        r.advertencia_formato,
     ]
-    fuentes = ["Excel"] + (["Word"] if _incluye_word(modo) else []) + ["Organigrama"]
-    fila += [", ".join(map(str, r.posiciones.get(f, []))) or "—" for f in fuentes]
-    fila += [r.estado_orden, r.observacion_orden]
-    fila.append(homologar_puesto_excel(r.excel.puesto_original) if r.excel and r.excel.valido else "—")
+    registros = [r.excel] + ([r.word] if _incluye_word(modo) else []) + [r.organigrama]
+    fila += [homologar_puesto(f.puesto_original) if f and f.valido else "—" for f in registros]
+    pares = (["Excel vs Word"] if _incluye_word(modo) else []) + ["Excel vs Organigrama"]
+    if _incluye_word(modo):
+        pares.append("Word vs Organigrama")
+    fila += [r.comparaciones_homologadas.get(par, "No comparable") for par in pares]
+    fila.append(r.estado_homologacion)
+    fila.append(r.similitud_homologada if r.similitud_homologada is not None else "No comparable")
     return fila
 
 
@@ -188,8 +197,8 @@ def _escribir_hoja_resumen(wb: Workbook, resultados: List[ComparisonResult], mod
         cell.font = Font(bold=True)
 
     filas_resumen = [("Total de puestos esperados (Excel)", total_excel)]
-    filas_resumen.append(("Puestos encontrados en diferente posición", sum(
-        r.estado_orden == "Diferente posición" for r in principales)))
+    filas_resumen.append(("Nombres coincidentes tras homologación (no valida niveles)",
+                          sum(r.estado_homologacion == "Coinciden" for r in principales)))
     if incluye_word:
         total_word = sum(1 for r in principales if r.word is not None)
         en_las_tres = sum(1 for r in principales if r.excel and r.word and r.organigrama)

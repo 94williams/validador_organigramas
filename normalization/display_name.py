@@ -1,4 +1,4 @@
-"""Homologación para presentación; no modifica las claves de comparación."""
+"""Homologación de denominaciones J.U.D. y L.C.P. en todas las fuentes."""
 import re
 
 
@@ -8,7 +8,7 @@ _PREFIJOS = (
 )
 
 
-def homologar_puesto_excel(texto: str) -> str:
+def homologar_puesto(texto: str) -> str:
     """Abrevia únicamente el tipo al inicio y conserva el resto del nombre."""
     for patron, abreviatura in _PREFIJOS:
         match = patron.match(texto)
@@ -16,3 +16,7 @@ def homologar_puesto_excel(texto: str) -> str:
             resto = texto[match.end():].lstrip()
             return abreviatura + (" " + resto if resto else "")
     return texto
+
+
+# Alias para consumidores existentes.
+homologar_puesto_excel = homologar_puesto

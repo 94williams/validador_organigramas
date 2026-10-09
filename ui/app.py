@@ -145,11 +145,9 @@ else:
     col5.metric("✅ Sin problema", ok_count)
     col6.metric("⚠️ Requieren atención", revisar_count)
 
-    st.metric("↕️ Encontrados en diferente posición", sum(
-        r.estado_orden == "Diferente posición" for r in resultados
-        if not r.puesto_clave_normalizada.startswith("[DUP-")))
-    st.caption("Orden esperado: consecutivo de la columna I del Excel. Word: puestos leídos desde 1. "
-               "Organigrama: cada rama completa, siguiendo conexiones; ramas hermanas de izquierda a derecha.")
+    st.caption("La homologación compara nombres entre fuentes, incluso abreviados como J.U.D. y L.C.P. "
+               "El porcentaje es la menor similitud de nombres entre parejas, no una probabilidad de validez. "
+               "Si faltan fuentes o hay duplicados, se indica No comparable. Los niveles se revisan por separado.")
 
     st.header("3. Detalle de inconsistencias")
 
@@ -163,8 +161,8 @@ else:
     )
     df_filtrado = df[df["Tipo de inconsistencia"].isin(tipos_seleccionados)]
 
-    if st.checkbox("Solo puestos encontrados en diferente posición"):
-        df_filtrado = df_filtrado[df_filtrado["Estado de orden"] == "Diferente posición"]
+    if st.checkbox("Solo diferencias o pendientes de homologación"):
+        df_filtrado = df_filtrado[df_filtrado["Resultado de homologación"] != "Coinciden"]
 
     busqueda = st.text_input("Buscar puesto")
     if busqueda:
