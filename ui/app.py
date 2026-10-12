@@ -29,6 +29,21 @@ import config  # noqa: E402
 
 st.set_page_config(page_title="Validador de Organigramas", layout="wide")
 
+# Evita combinar la pantalla nueva con módulos antiguos retenidos por el servidor.
+from comparison import comparator
+from extractors import excel_extractor, organigrama_extractor
+from reports import excel_report
+if any(getattr(modulo, "VERSION_REVISION_ORDEN", None) != "2026-10-12"
+       for modulo in (comparator, excel_extractor, organigrama_extractor, excel_report)):
+    st.error("La actualización está pendiente de reinicio. En Streamlit Cloud abre Manage app → Reboot app, "
+             "espera a que termine y vuelve a analizar. Así se evita descargar un reporte con columnas anteriores.")
+    st.stop()
+if st.session_state.get("version_resultados") != "2026-10-12":
+    st.session_state.resultado_analisis = None
+    st.session_state.reporte_bytes = None
+    st.session_state.version_resultados = "2026-10-12"
+
+
 
 # ---------------------------------------------------------------------------
 # Acceso protegido por contraseña (opcional). Se activa configurando
@@ -147,8 +162,11 @@ else:
 
     st.caption("La homologación compara nombres entre fuentes, incluso abreviados como J.U.D. y L.C.P. "
                "El porcentaje es la menor similitud de nombres entre parejas, no una probabilidad de validez. "
-               "Si faltan fuentes o hay duplicados, se indica No comparable. Los niveles se revisan por separado.")
+               "En la revisión por ID se conserva cada aparición, incluso con nombre repetido. Los niveles se revisan por separado.")
 
+    st.caption("Orden de referencia: ID de la columna I del Excel. Organigrama: superior, rama izquierda completa "
+               "y siguiente rama hacia la derecha. Jefe inmediato se obtiene de los conectores. "
+               "Sin ID o conexiones verificables, el orden queda pendiente de revisión.")
     st.header("3. Detalle de inconsistencias")
 
     encabezados = _encabezados(modo_actual)
@@ -163,6 +181,9 @@ else:
 
     if st.checkbox("Solo diferencias o pendientes de homologación"):
         df_filtrado = df_filtrado[df_filtrado["Resultado de homologación"] != "Coinciden"]
+
+    if st.checkbox("Solo diferencias o pendientes de orden"):
+        df_filtrado = df_filtrado[df_filtrado["Resultado de orden"] != "Misma posición"]
 
     busqueda = st.text_input("Buscar puesto")
     if busqueda:

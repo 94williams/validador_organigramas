@@ -61,3 +61,24 @@ def test_selector_de_modo_presente_sin_password():
     opciones = at.radio[0].options
     assert any("completo" in o.lower() for o in opciones)
     assert any("sin word" in o.lower() or "organigrama" in o.lower() for o in opciones)
+
+
+def test_modulos_anteriores_bloquean_reporte_y_piden_reinicio(monkeypatch):
+    from reports import excel_report
+    monkeypatch.setattr(excel_report, 'VERSION_REVISION_ORDEN', 'anterior')
+    at = AppTest.from_file(RUTA_APP)
+    at.run(timeout=15)
+    assert not at.exception
+    assert any('Reboot app' in error.value for error in at.error)
+    assert len(at.radio) == 0
+
+
+def test_sesion_anterior_descarta_descarga_desactualizada():
+    at = AppTest.from_file(RUTA_APP)
+    at.session_state['version_resultados'] = 'anterior'
+    at.session_state['resultado_analisis'] = {'dato': 'anterior'}
+    at.session_state['reporte_bytes'] = b'reporte anterior'
+    at.run(timeout=15)
+    assert not at.exception
+    assert at.session_state['reporte_bytes'] is None
+    assert at.session_state['resultado_analisis'] is None

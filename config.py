@@ -35,6 +35,8 @@ EXCEL_HEADERS_NIVEL = [
     "nivel orgánico",
     "nivel de cargo",
 ]
+EXCEL_COL_ID = "I"
+EXCEL_HEADERS_JEFE = ["jefe inmediato", "puesto del jefe inmediato", "nombre del puesto del jefe inmediato", "denominacion del jefe inmediato", "superior inmediato", "superior jerarquico"]
 EXCEL_FALLBACK_COL_PUESTO = "J"
 EXCEL_FALLBACK_COL_NIVEL = "K"
 EXCEL_FILA_INICIO_BUSQUEDA_HEADER = 1

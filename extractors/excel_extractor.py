@@ -12,6 +12,8 @@ que es justo lo que pide la trazabilidad (punto 10 del planteamiento).
 import os
 import re
 import sys
+from decimal import Decimal, InvalidOperation
+from collections import Counter
 from typing import List, Optional, Tuple
 
 import openpyxl
@@ -24,6 +26,7 @@ from normalization.normalizer import normalizar_puesto, normalizar_nivel  # noqa
 from utils.logger import get_logger  # noqa: E402
 
 logger = get_logger("excel_extractor")
+VERSION_REVISION_ORDEN = "2026-10-12"
 
 
 # Rótulos administrativos/de resumen que pueden aparecer en la columna de
@@ -69,6 +72,20 @@ def _texto_encabezado_coincide(valor, candidatos: List[str]) -> bool:
     return any(c in v for c in candidatos) or any(v == c or v.startswith(c) or v.endswith(c) for c in candidatos)
 
 
+def _es_columna_jefe(valor):
+    return normalizar_puesto(str(valor or "")) in config.EXCEL_HEADERS_JEFE
+
+
+def _leer_id(valor):
+    if valor is None or isinstance(valor, bool):
+        return None
+    try:
+        n = Decimal(str(valor).strip())
+        return int(n) if n.is_finite() and n > 0 and n == n.to_integral_value() else None
+    except (InvalidOperation, ValueError):
+        return None
+
+
 def _buscar_columnas_por_encabezado(ws) -> Optional[Tuple[int, int, int]]:
     """
     Busca en las primeras N filas una fila que contenga encabezados
@@ -82,6 +99,8 @@ def _buscar_columnas_por_encabezado(ws) -> Optional[Tuple[int, int, int]]:
             # Se evalúa primero "nivel" porque encabezados como "Nivel del
             # puesto" contienen la palabra "puesto" y podrían confundirse
             # con la columna de nombre de puesto si se evaluara al revés.
+            if _es_columna_jefe(cell.value):
+                continue
             if _texto_encabezado_coincide(cell.value, config.EXCEL_HEADERS_NIVEL):
                 col_nivel = cell.column
             elif _texto_encabezado_coincide(cell.value, config.EXCEL_HEADERS_PUESTO):
@@ -166,6 +185,15 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
                 f"({config.EXCEL_FALLBACK_COL_PUESTO}/{config.EXCEL_FALLBACK_COL_NIVEL})."
             )
 
+        col_id = column_index_from_string(config.EXCEL_COL_ID)
+        fila_encabezado = fila_inicio - 1
+        col_jefe = next((c.column for c in ws[fila_encabezado] if _es_columna_jefe(c.value)), None)
+        encabezado_id = normalizar_puesto(str(ws.cell(fila_encabezado, col_id).value or ""))
+        usar_id = col_id not in (col_puesto_idx, col_nivel_idx, col_jefe) and (
+            encabezado_id in {"id", "consecutivo", "numero", "no", "no de puesto", "id puesto", "id del puesto"}
+            or any(ws.cell(f, col_id).value is not None for f in range(fila_inicio, ws.max_row + 1))
+        )
+
         col_puesto_letra = get_column_letter(col_puesto_idx)
         col_nivel_letra = get_column_letter(col_nivel_idx)
 
@@ -193,7 +221,14 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
                 columna=f"{col_puesto_letra}/{col_nivel_letra}",
             )
 
+            valor_id = ws.cell(fila_idx, col_id).value if usar_id else None
+            id_excel = _leer_id(valor_id)
+            jefe = ws.cell(fila_idx, col_jefe).value if col_jefe else None
             registros.append(PuestoRecord(
+                id_excel=id_excel,
+                revision_por_id=usar_id,
+                error_id=("ID de Excel vacío o inválido; se requiere un entero positivo." if usar_id and id_excel is None else ""),
+                jefe_inmediato=str(jefe).strip() if jefe is not None else None,
                 fuente=Fuente.EXCEL,
                 puesto_original=puesto_str,
                 nivel_original=None if nivel_str is None else str(nivel_str),
@@ -204,6 +239,15 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
                 confianza_extraccion=1.0,
             ))
 
+    ids = Counter(r.id_excel for r in registros if r.id_excel is not None)
+    por_id = {r.id_excel: r for r in registros if r.id_excel is not None and ids[r.id_excel] == 1}
+    for r in registros:
+        if r.id_excel is not None and ids[r.id_excel] > 1:
+            r.error_id = f"ID de Excel repetido: {r.id_excel}."
+        jefe_id = _leer_id(r.jefe_inmediato)
+        if jefe_id is not None:
+            r.jefe_inmediato = (por_id[jefe_id].puesto_original if jefe_id in por_id
+                                else f"[ID de jefe no resoluble: {jefe_id}]")
     wb.close()
     logger.info(f"Excel '{nombre_archivo}': {len(registros)} registro(s) extraído(s).")
     return registros

@@ -28,6 +28,7 @@ from normalization.display_name import homologar_puesto
 from utils.logger import get_logger  # noqa: E402
 
 logger = get_logger("excel_report")
+VERSION_REVISION_ORDEN = "2026-10-12"
 
 COLOR_POR_TIPO = {
     TipoInconsistencia.OK: "C6EFCE",                          # verde
@@ -81,9 +82,16 @@ def _encabezados_homologacion(modo):
     return columnas + ["Resultado de homologación", "Detalle de inconsistencia de nombres", "Similitud de nombres homologados (%)"]
 
 
+def _encabezados_orden(modo):
+    return (["ID esperado - Excel", "Jefe inmediato - Excel"]
+            + (["Posición leída - Word", "Orden - Word"] if _incluye_word(modo) else [])
+            + ["Posición leída - Organigrama", "Jefe inmediato - Organigrama", "Validación de jefe inmediato",
+               "Orden - Organigrama", "Resultado de orden", "Detalle de orden"])
+
+
 def _encabezados(modo) -> List[str]:
     return (_ENCABEZADOS_INICIO + (_ENCABEZADOS_WORD if _incluye_word(modo) else [])
-            + _ENCABEZADOS_FIN + _encabezados_homologacion(modo))
+            + _ENCABEZADOS_FIN + _encabezados_homologacion(modo) + _encabezados_orden(modo))
 
 
 def _fila_desde_resultado(r: ComparisonResult, modo) -> list:
@@ -133,6 +141,12 @@ def _fila_desde_resultado(r: ComparisonResult, modo) -> list:
     fila.append(r.estado_homologacion)
     fila.append(_detalle_nombres(r, modo))
     fila.append(r.similitud_homologada if r.similitud_homologada is not None else "No comparable")
+    fila += [r.excel.id_excel if r.excel and r.excel.id_excel is not None else "—",
+             r.excel.jefe_inmediato or "—" if r.excel else "—"]
+    if _incluye_word(modo):
+        fila += [r.posicion_word or "—", r.orden_word]
+    fila += [r.posicion_organigrama or "—", r.organigrama.jefe_inmediato or "—" if r.organigrama else "—",
+             r.estado_jefe, r.orden_organigrama, r.estado_orden, r.detalle_orden]
     return fila
 
 
@@ -143,7 +157,11 @@ def _detalle_nombres(r, modo):
     detalles = []
     for fuente, registro in registros.items():
         if registro is None:
-            detalles.append(f"{fuente}: puesto no encontrado en esta comparación.")
+            pendiente = r.revision_por_id and fuente != "Excel" and (
+                r.estado_orden == "Revisar ID de Excel" or
+                (r.orden_word if fuente == "Word" else r.orden_organigrama) == "No verificable")
+            detalles.append(f"{fuente}: aparición sin asignar; consultar el detalle de orden." if pendiente
+                            else f"{fuente}: puesto no encontrado en esta comparación.")
         elif not registro.valido:
             detalles.append(f"{fuente}: error de extracción; revisar el documento.")
     for pareja, estado in r.comparaciones_homologadas.items():
@@ -223,12 +241,14 @@ def _escribir_hoja_resumen(wb: Workbook, resultados: List[ComparisonResult], mod
     ws.append(["Resumen general del análisis"])
     ws["A1"].font = Font(bold=True, size=14)
     ws.append([f"Modo de análisis: {'Excel + Word + Organigrama (completo)' if incluye_word else 'Excel vs Organigrama (Word no participó)'}"])
-    ws.append([])
+    ws.append(["Revisión por ID y ramas: 2026-10-12. Recorrido superior → rama izquierda completa → siguiente rama."])
     ws.append(["Métrica", "Valor"])
     for cell in ws[4]:
         cell.font = Font(bold=True)
 
     filas_resumen = [("Total de puestos esperados (Excel)", total_excel)]
+    filas_resumen += [("Registros revisados por ID de Excel", sum(r.revision_por_id and r.excel is not None for r in principales)),
+                      ("Registros con diferencias o pendientes de orden", sum(r.revision_por_id and r.excel is not None and r.estado_orden != "Misma posición" for r in principales))]
     filas_resumen.append(("Nombres coincidentes tras homologación (no valida niveles)",
                           sum(r.estado_homologacion == "Coinciden" for r in principales)))
     if incluye_word:

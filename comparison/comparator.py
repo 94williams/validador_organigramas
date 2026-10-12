@@ -39,6 +39,7 @@ from normalization.normalizer import normalizar_para_comparacion, detectar_abrev
 from utils.logger import get_logger  # noqa: E402
 
 logger = get_logger("comparator")
+VERSION_REVISION_ORDEN = "2026-10-12"
 
 
 def _agrupar_por_normalizado(records: List[PuestoRecord]) -> Dict[str, List[PuestoRecord]]:
@@ -328,6 +329,10 @@ def comparar_fuentes(
     genuinamente sin puestos extraídos, en modo COMPLETO, sí se siga
     reportando como "falta en Word" — son escenarios distintos.
     """
+    if any(r.revision_por_id or r.id_excel is not None for r in excel_records):
+        from comparison.sequence_comparator import comparar_por_id
+        return comparar_por_id(excel_records, word_records, organigrama_records, incluir_word)
+
     resultados: List[ComparisonResult] = []
 
     # 1. Registros con error -> resultado directo
