@@ -109,7 +109,7 @@ def test_ui_busqueda_literal_y_conteos_reales(busqueda, monkeypatch):
     excel = [rec(Fuente.EXCEL), rec(Fuente.EXCEL), PuestoRecord(Fuente.EXCEL, '', None, error='ilegible')]
     data = result(excel, [], [rec(Fuente.ORGANIGRAMA)], ModoAnalisis.EXCEL_ORGANIGRAMA)
     app = AppTest.from_file(str(Path(__file__).parents[1] / 'ui/app.py'))
-    app.session_state['version_resultados'] = '2026-10-12'
+    app.session_state['version_resultados'] = '2026-10-12-L'
     app.session_state['resultado_analisis'] = data
     app.session_state['reporte_bytes'] = generar_reporte_bytes(data['resultados'], modo=data['modo'])
     app.run(timeout=15)

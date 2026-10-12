@@ -33,15 +33,17 @@ st.set_page_config(page_title="Validador de Organigramas", layout="wide")
 from comparison import comparator
 from extractors import excel_extractor, organigrama_extractor
 from reports import excel_report
-if any(getattr(modulo, "VERSION_REVISION_ORDEN", None) != "2026-10-12"
-       for modulo in (comparator, excel_extractor, organigrama_extractor, excel_report)):
+if (any(getattr(modulo, "VERSION_REVISION_ORDEN", None) != "2026-10-12"
+        for modulo in (comparator, excel_extractor, organigrama_extractor, excel_report))
+        or getattr(excel_extractor, "VERSION_JEFE_EXCEL", None) != "2026-10-12-L"
+        or getattr(config, "EXCEL_FALLBACK_COL_JEFE", None) != "L"):
     st.error("La actualización está pendiente de reinicio. En Streamlit Cloud abre Manage app → Reboot app, "
              "espera a que termine y vuelve a analizar. Así se evita descargar un reporte con columnas anteriores.")
     st.stop()
-if st.session_state.get("version_resultados") != "2026-10-12":
+if st.session_state.get("version_resultados") != "2026-10-12-L":
     st.session_state.resultado_analisis = None
     st.session_state.reporte_bytes = None
-    st.session_state.version_resultados = "2026-10-12"
+    st.session_state.version_resultados = "2026-10-12-L"
 
 
 

@@ -440,3 +440,8 @@ Word no contiene jefe inmediato: si dos nombres y niveles idénticos cambian ent
 Solo se certifican conectores ortogonales inequívocos de un árbol completo. Cajas desconectadas, conexiones laterales, curvas/diagonales, cruces ambiguos, lectura OCR/cercanía o continuidad entre varias páginas quedan como «No verificable». Los nombres pueden seguir comparándose cuando su correspondencia sea única, pero no se inventan posiciones. La validación de geometría usa tolerancia de 2 puntos PDF.
 
 Después de integrar una actualización en Streamlit Cloud, usar **Manage app → Reboot app**, esperar y generar un análisis nuevo. La interfaz comprueba la versión de los módulos críticos y detiene la descarga si siguen cargados módulos antiguos. El resumen del Excel identifica la revisión por ID y ramas (2026-10-12).
+
+
+### Lectura de jefe inmediato en Excel (columna L)
+
+Se prioriza el encabezado reconocido de jefe inmediato, aunque la columna esté en otra ubicación. Si no se reconoce (por ejemplo, título combinado o colocado en otra fila), se utiliza **L** como respaldo configurable (`EXCEL_FALLBACK_COL_JEFE`), sin sustituir las columnas de puesto, nivel o ID. Se aceptan encabezados con anotaciones como «Jefe inmediato (puesto)». Una combinación vertical explícita en la columna de jefe comparte su valor con las filas que abarca; las celdas vacías sin combinar permanecen vacías. Los valores pueden ser nombres o IDs del superior, con la misma resolución y validación existentes. La raya en el reporte indica ausencia de un valor leído, no un resultado de comparación con el organigrama.
