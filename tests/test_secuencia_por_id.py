@@ -237,7 +237,7 @@ def test_ui_filtra_diferencias_de_orden(tmp_path, monkeypatch):
     nombres_word = NOMBRES.copy(); nombres_word[2], nombres_word[3] = nombres_word[3], nombres_word[2]
     data = ejecutar(tmp_path, word=nombres_word)
     app = AppTest.from_file(str(Path(__file__).parents[1]/'ui/app.py'))
-    app.session_state['version_resultados'] = '2026-10-12'
+    app.session_state['version_resultados'] = '2026-10-12-L'
     app.session_state['resultado_analisis'] = data
     app.run(timeout=15)
     assert not app.exception

@@ -36,9 +36,10 @@ EXCEL_HEADERS_NIVEL = [
     "nivel de cargo",
 ]
 EXCEL_COL_ID = "I"
-EXCEL_HEADERS_JEFE = ["jefe inmediato", "puesto del jefe inmediato", "nombre del puesto del jefe inmediato", "denominacion del jefe inmediato", "superior inmediato", "superior jerarquico"]
+EXCEL_HEADERS_JEFE = ["jefe inmediato", "nombre del jefe inmediato", "puesto del jefe inmediato", "denominacion del puesto del jefe inmediato", "nombre del puesto del jefe inmediato", "denominacion del jefe inmediato", "superior inmediato", "superior jerarquico"]
 EXCEL_FALLBACK_COL_PUESTO = "J"
 EXCEL_FALLBACK_COL_NIVEL = "K"
+EXCEL_FALLBACK_COL_JEFE = "L"
 EXCEL_FILA_INICIO_BUSQUEDA_HEADER = 1
 EXCEL_MAX_FILAS_BUSQUEDA_HEADER = 30  # revisa más filas para aceptar encabezados más abajo en la hoja
 

@@ -27,6 +27,7 @@ from utils.logger import get_logger  # noqa: E402
 
 logger = get_logger("excel_extractor")
 VERSION_REVISION_ORDEN = "2026-10-12"
+VERSION_JEFE_EXCEL = "2026-10-12-L"
 
 
 # Rótulos administrativos/de resumen que pueden aparecer en la columna de
@@ -73,7 +74,35 @@ def _texto_encabezado_coincide(valor, candidatos: List[str]) -> bool:
 
 
 def _es_columna_jefe(valor):
-    return normalizar_puesto(str(valor or "")) in config.EXCEL_HEADERS_JEFE
+    texto = normalizar_puesto(str(valor or ""))
+    return any(texto == nombre or texto.startswith(nombre + " ")
+               for nombre in config.EXCEL_HEADERS_JEFE)
+
+
+def _columna_jefe(ws, fila_encabezado, columnas_ocupadas):
+    detectada = next((c.column for c in ws[fila_encabezado]
+                     if c.column not in columnas_ocupadas and _es_columna_jefe(c.value)), None)
+    if detectada is not None:
+        return detectada
+    respaldo = column_index_from_string(config.EXCEL_FALLBACK_COL_JEFE)
+    if respaldo not in columnas_ocupadas and respaldo <= ws.max_column:
+        logger.info(f"Jefe inmediato: no se reconoció el encabezado; usando columna {config.EXCEL_FALLBACK_COL_JEFE}.")
+        return respaldo
+    return None
+
+
+def _valor_jefe(ws, fila, columna):
+    if columna is None:
+        return None
+    celda = ws.cell(fila, columna)
+    if celda.value is not None:
+        return celda.value
+    # Heredar solo dentro de una combinación explícita de la columna de jefe;
+    # una celda simplemente vacía nunca toma el jefe de la fila anterior.
+    for rango in ws.merged_cells.ranges:
+        if rango.min_col == columna and celda.coordinate in rango:
+            return ws.cell(rango.min_row, rango.min_col).value
+    return None
 
 
 def _leer_id(valor):
@@ -187,7 +216,7 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
 
         col_id = column_index_from_string(config.EXCEL_COL_ID)
         fila_encabezado = fila_inicio - 1
-        col_jefe = next((c.column for c in ws[fila_encabezado] if _es_columna_jefe(c.value)), None)
+        col_jefe = _columna_jefe(ws, fila_encabezado, {col_id, col_puesto_idx, col_nivel_idx})
         encabezado_id = normalizar_puesto(str(ws.cell(fila_encabezado, col_id).value or ""))
         usar_id = col_id not in (col_puesto_idx, col_nivel_idx, col_jefe) and (
             encabezado_id in {"id", "consecutivo", "numero", "no", "no de puesto", "id puesto", "id del puesto"}
@@ -223,7 +252,7 @@ def extraer_excel(ruta_archivo: str, hoja: Optional[str] = None) -> List[PuestoR
 
             valor_id = ws.cell(fila_idx, col_id).value if usar_id else None
             id_excel = _leer_id(valor_id)
-            jefe = ws.cell(fila_idx, col_jefe).value if col_jefe else None
+            jefe = _valor_jefe(ws, fila_idx, col_jefe)
             registros.append(PuestoRecord(
                 id_excel=id_excel,
                 revision_por_id=usar_id,
