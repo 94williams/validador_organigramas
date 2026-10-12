@@ -39,9 +39,11 @@ from normalization.normalizer import normalizar_puesto, normalizar_nivel, texto_
 from extractors.pdf_utils import (  # noqa: E402
     abrir_pdf, pagina_tiene_texto, obtener_bloques_texto, ocr_pagina_con_posiciones,
 )
+from extractors.hierarchy_order import ordenar_por_ramas
 from utils.logger import get_logger  # noqa: E402
 
 logger = get_logger("organigrama_extractor")
+VERSION_REVISION_ORDEN = "2026-10-12"
 
 _PATRONES_NIVEL_COMPILADOS = [re.compile(p, re.IGNORECASE) for p in config.NIVEL_PATTERNS]
 _PATRON_TOKEN_NUMERICO = re.compile(r"\d{1,3}")
@@ -210,7 +212,7 @@ def _extraer_pagina_por_cajas(page, nombre_archivo: str, num_pagina: int) -> Opt
         ))
 
     logger.info(f"Página {num_pagina}: {len(cajas)} caja(s) vectorial(es) detectada(s), {len(registros)} puesto(s) extraído(s).")
-    return registros
+    return ordenar_por_ramas(page, registros)
 
 
 # ---------------------------------------------------------------------------
@@ -298,6 +300,7 @@ def _extraer_pagina_por_cercania(page, nombre_archivo: str, num_pagina: int, blo
             ubicacion=ubicacion,
             metodo_extraccion=metodo,
             confianza_extraccion=confianza_base,
+            error_orden="Orden no verificable: lectura por OCR/cercanía, sin conectores verificables.",
         ))
     return registros
 
@@ -358,6 +361,10 @@ def extraer_organigrama(ruta_archivo: str) -> List[PuestoRecord]:
                     metodo_extraccion=MetodoExtraccion.OCR,
                 ))
 
+    if len({r.ubicacion.pagina for r in registros if r.valido and r.ubicacion}) > 1:
+        for r in registros:
+            r.posicion_lectura = None
+            r.error_orden = "Orden global no verificable: organigrama en varias páginas; revisar continuidad entre ramas."
     doc.close()
     logger.info(f"Organigrama '{nombre_archivo}': {len(registros)} registro(s) extraído(s) en total.")
     return registros

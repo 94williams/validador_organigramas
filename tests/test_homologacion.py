@@ -35,13 +35,13 @@ def test_ultima_columna_y_original_sin_modificaciones(modo):
     headers = _encabezados(modo)
     fila = _fila_desde_resultado(r, modo)
     assert 'Excel - Puesto homologado' in headers
-    assert headers[-1] == 'Similitud de nombres homologados (%)'
+    assert headers[-1] == 'Detalle de orden'
     assert len(headers) == len(fila)
     assert fila[headers.index('Excel - Original')] == original
     assert fila[headers.index('Excel - Puesto homologado')] == 'L.C.P. de Gestión'
     wb = openpyxl.load_workbook(BytesIO(generar_reporte_bytes([r], modo=modo)))
     ws = wb['Detalle']
-    assert ws.cell(1, ws.max_column).value == 'Similitud de nombres homologados (%)'
+    assert ws.cell(1, ws.max_column).value == 'Detalle de orden'
     assert ws.cell(2, headers.index('Excel - Puesto homologado') + 1).value == 'L.C.P. de Gestión'
     assert r == antes
 

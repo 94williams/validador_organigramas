@@ -117,6 +117,14 @@ class PuestoRecord:
     cantidad: Optional[str] = None  # columna "CANTIDAD" en tablas de Word, cuando existe
     error: Optional[str] = None
 
+    id_excel: Optional[int] = None
+    revision_por_id: bool = False
+    error_id: str = ""
+    jefe_inmediato: Optional[str] = None
+    posicion_lectura: Optional[int] = None
+    jerarquia_verificada: bool = False
+    error_orden: str = ""
+
     # --- Separación tipo de puesto / nombre específico (catálogo oficial) ---
     # Se pueblan mediante comparison.catalogo_niveles.separar_tipo_y_nombre_especifico()
     # después de la extracción; quedan None si el puesto no corresponde a
@@ -154,3 +162,11 @@ class ComparisonResult:
     comparaciones_homologadas: dict = field(default_factory=dict)
     estado_homologacion: str = "No comparable"
     similitud_homologada: Optional[float] = None  # 0–100; None si falta una comparación fiable
+    revision_por_id: bool = False
+    posicion_word: Optional[int] = None
+    posicion_organigrama: Optional[int] = None
+    orden_word: str = "No verificable"
+    orden_organigrama: str = "No verificable"
+    estado_jefe: str = "No verificable"
+    estado_orden: str = "No verificable"
+    detalle_orden: str = "Sin ID de referencia en Excel; solo se comparan nombres y niveles."

@@ -71,7 +71,7 @@ def test_duplicados_no_se_certifican_como_homologacion_univoca():
 
 
 @pytest.mark.parametrize('modo',['completo','excel_organigrama'])
-def test_sin_posiciones_y_con_columnas_por_fuente(modo):
+def test_columnas_por_fuente_y_orden_no_verificable_sin_id(modo):
     excel=[rec(Fuente.EXCEL,'JUD de Archivo'),rec(Fuente.EXCEL,'LCP de Gestión')]
     org=[rec(Fuente.ORGANIGRAMA,'Líder Coordinador de Proyectos de Gestión'),rec(Fuente.ORGANIGRAMA,'Jefatura de Unidad Departamental de Archivo')]
     word=[rec(Fuente.WORD,'LCP de Gestión'),rec(Fuente.WORD,'J U D de Archivo')]
@@ -79,8 +79,10 @@ def test_sin_posiciones_y_con_columnas_por_fuente(modo):
     assert all(r.estado_homologacion=='Coinciden' for r in resultados)
     wb=openpyxl.load_workbook(BytesIO(generar_reporte_bytes(resultados,excel,word,org,modo)))
     headers=[c.value for c in wb['Detalle'][1]]
-    assert not any('posición' in h.lower() or 'orden' in h.lower() for h in headers)
-    assert headers[-1]=='Similitud de nombres homologados (%)'
+    assert 'ID esperado - Excel' in headers
+    assert all(r.estado_orden == 'No verificable' for r in resultados)
+    assert ('Posición leída - Word' in headers) == (modo == 'completo')
+    assert headers[-1]=='Detalle de orden'
     assert ('Word - Puesto homologado' in headers)==(modo=='completo')
     assert ('Homologado: Word vs Organigrama' in headers)==(modo=='completo')
     assert 'Organigrama - Puesto homologado' in headers

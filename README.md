@@ -414,7 +414,7 @@ Todo el análisis corre localmente en tu máquina. Los archivos temporales que c
 
 ## 15. Comparación por puesto homologado
 
-La revisión por posición, los consecutivos de columna I y la reconstrucción del orden por ramas se retiraron. Un puesto puede coincidir en cualquier lugar de Word u organigrama. La extracción conserva coordenadas internas para leer las cajas PDF y diagnosticar errores, pero no las compara ni exporta como criterio de aceptación.
+La homologación de nombres se conserva como comprobación independiente del orden. Cuando Excel aporta IDs en la columna I, se activa la revisión por ocurrencias descrita en la sección 16.
 
 Al final de la tabla y del reporte se muestran los nombres homologados de Excel, Word (solo en modo completo) y Organigrama, las comparaciones por pareja y el resultado global de homologación.
 
@@ -425,3 +425,18 @@ Jefatura/Jefe de Unidad Departamental, JUD, J.U.D. y J U D se homologan a J.U.D.
 El reporte omite la advertencia de mayúsculas. Las tres columnas homologadas quedan juntas, seguidas del detalle por parejas, el resultado global y «Similitud de nombres homologados (%)». Este porcentaje es el mínimo de la similitud de caracteres (RapidFuzz ratio) entre cada pareja de nombres normalizados y homologados; 100 indica igualdad de las claves, no validez de niveles ni certeza estadística. Una diferencia real nunca se redondea a 100. Si falta una fuente participante, hay errores o duplicados, se muestra «No comparable». En modo Excel–Organigrama se calcula solamente esa pareja.
 
 La columna «Organigrama - Puesto homologado» conserva literalmente el nombre extraído del organigrama, sin reescribir sus siglas. Excel y Word sí presentan J.U.D./L.C.P. homologados. La comparación interna conserva las reglas de normalización y equivalencias. «Detalle de inconsistencia de nombres» identifica las parejas que difieren y muestra ambos nombres; también señala fuentes faltantes, errores de extracción y duplicados, sin atribuir automáticamente el error a una fuente.
+
+
+## 16. Orden por ID de Excel y ramas del organigrama
+
+La columna I es la referencia de posición. Debe contener enteros positivos únicos; el ID 11 se compara con la posición 11, aunque existan huecos o sea el primer registro. Los encabezados repetidos no cuentan como puestos. El reporte se ordena por ID sin alterar los archivos de entrada. IDs inválidos/repetidos se muestran como pendientes, sin reutilizar una posición para varias filas. Si no hay columna de ID identificable ni datos en I, se conserva el comparador de nombres anterior y el orden se marca como no verificable.
+
+Word conserva la secuencia de tablas/páginas extraídas. El PDF usa los conectores: superior → rama izquierda completa → siguiente rama hacia la derecha (recorrido en profundidad). El orden en que se dibujaron los objetos del PDF y el tamaño numérico del nivel no determinan la jerarquía. El ejemplo de Administración y Finanzas produce: Dirección, Subdirección de Administración, L.C.P. de Desarrollo de Personal, L.C.P. de Finanzas, Subdirección de Recursos Materiales, L.C.P. de Abastecimiento y Servicios.
+
+Cada fila con ID conserva el puesto realmente leído en esa posición de Word y del organigrama. Si difiere, el detalle informa las posiciones candidatas del puesto esperado, sin reordenar las fuentes ni ocultar las diferencias. Los nombres repetidos se conservan como registros individuales. «Jefe inmediato» (también «Puesto del jefe inmediato», «Nombre del puesto del jefe inmediato», «Denominación del jefe inmediato», «Superior inmediato» o «Superior jerárquico») se identifica por encabezado en Excel. Puede contener el nombre o el ID único del superior dentro de las hojas analizadas. El PDF obtiene el superior mediante su conector. Un nombre de jefe repetido o una referencia de jefe no resoluble requiere revisión.
+
+Word no contiene jefe inmediato: si dos nombres y niveles idénticos cambian entre sí, solo se puede comprobar su presencia en cada posición, no la identidad de la rama; el detalle lo indica. Una diferencia de nivel se conserva aunque el orden coincida. El reporte añade ID esperado, posiciones leídas, jefes inmediatos, resultados por fuente y detalle de orden. El nombre extraído del organigrama continúa mostrándose literalmente y no vuelve la advertencia de mayúsculas.
+
+Solo se certifican conectores ortogonales inequívocos de un árbol completo. Cajas desconectadas, conexiones laterales, curvas/diagonales, cruces ambiguos, lectura OCR/cercanía o continuidad entre varias páginas quedan como «No verificable». Los nombres pueden seguir comparándose cuando su correspondencia sea única, pero no se inventan posiciones. La validación de geometría usa tolerancia de 2 puntos PDF.
+
+Después de integrar una actualización en Streamlit Cloud, usar **Manage app → Reboot app**, esperar y generar un análisis nuevo. La interfaz comprueba la versión de los módulos críticos y detiene la descarga si siguen cargados módulos antiguos. El resumen del Excel identifica la revisión por ID y ramas (2026-10-12).
